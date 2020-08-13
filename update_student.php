@@ -47,12 +47,11 @@
                 $student_profile_picture = $_FILES['student_profile_picture']['name'];
                 move_uploaded_file($_FILES["student_profile_picture"]["tmp_name"],"assets/img/std/".$_FILES["student_profile_picture"]["name"]);
                 $student_account_status = $_POST['student_account_status'];
-                $student_login_id = $_POST['student_login_id'];     
                 $student_bio = $_POST['student_bio'];  
                 $update = $_GET['update'];        
 
                 //Insert Captured information to a database table
-                $postQuery="UPDATE students SET student_bio =?, student_name =?, student_reg_number =?, student_email =?, student_gender =?, student_phone_number =?, student_address =?, student_profile_picture =?, student_account_status =? WHERE student_login_id =?";
+                $postQuery="UPDATE students SET student_bio =?, student_name =?, student_reg_number =?, student_email =?, student_gender =?, student_phone_number =?, student_address =?, student_profile_picture =?, student_account_status =? WHERE student_id =?";
                 $postStmt = $mysqli->prepare($postQuery);
                 //bind paramaters
                 $rc=$postStmt->bind_param('sssssssssi', $student_bio, $student_name, $student_reg_number, $student_email, $student_gender, $student_phone_number, $student_address, $student_profile_picture, $student_account_status, $update);
@@ -187,10 +186,6 @@
                                                     <option>Denied Login</option>
                                                 </select>
                                             </div>
-                                            <div class="form-group col-md-6" style="display:none">
-                                                <label for="inputCity">Login Id</label>
-                                                <input type="text" name="student_login_id" class="form-control" value="<?php echo $std->std_login_id;?>">
-                                            </div>                                            
                                         </div>
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-12">
