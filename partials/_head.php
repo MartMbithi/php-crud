@@ -16,9 +16,6 @@
     <link href="assets/css/authentication/form-2.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="assets/css/forms/theme-checkbox-radio.css">
     <link rel="stylesheet" type="text/css" href="assets/css/forms/switches.css">
-    <script src="plugins/sweetalerts/promise-polyfill.js"></script>
-    <link href="assets/css/components/custom-sweetalert.css" rel="stylesheet" type="text/css" />
-    <link href="plugins/sweetalerts/sweetalert2.min.css" rel="stylesheet" type="text/css" />
     <script src="assets/js/swal.js"></script>
     <!--Load Swal-->
     <?php if(isset($success)) {?>
