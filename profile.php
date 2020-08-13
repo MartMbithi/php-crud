@@ -10,11 +10,6 @@
     <!--  BEGIN NAVBAR  -->
     <?php 
         require_once('partials/_navbar.php');
-    ?>
-    <!--  END NAVBAR  -->
-
-    <!--  BEGIN NAVBAR  -->
-    <?php
         //Get Logged In User Session
         $login_user_name = $_SESSION['login_user_name'];
         $ret = "SELECT * FROM  administrator  WHERE admin_email = '$login_user_name' || admin_username = '$login_user_name' "; 
