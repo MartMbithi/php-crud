@@ -4,6 +4,24 @@
     include('config/checklogin.php');
     check_login();
     require_once('partials/_head.php');
+    //Delete Librarian Account
+    if(isset($_GET['delete']))
+    {
+          $id=intval($_GET['delete']);
+          $adn="DELETE FROM  librarians  WHERE  librarian_id = ?";
+          $stmt= $mysqli->prepare($adn);
+          $stmt->bind_param('i',$id);
+          $stmt->execute();
+          $stmt->close();	 
+         if($stmt)
+         {
+             $success = "Deleted" && header("refresh:1; url=manage_librarians.php");
+         }
+         else
+         {
+             $err = "Try Again Later";
+         }
+      }
 ?>
 <body>
     
@@ -90,8 +108,8 @@
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
                                                         </button>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuReference1">
-                                                            <a class="dropdown-item" href="view_librarian.php?id=<?php echo $lib->librarian_id;?>">View</a>
-                                                            <a class="dropdown-item" href="update_librarian.php?id=<?php echo $lib->librarian_id;?>">Update</a>
+                                                            <a class="dropdown-item" href="view_librarian.php?view=<?php echo $lib->librarian_id;?>">View</a>
+                                                            <a class="dropdown-item" href="update_librarian.php?update=<?php echo $lib->librarian_id;?>">Update</a>
                                                             <div class="dropdown-divider"></div>
                                                             <a class="dropdown-item" href="manage_librarian.php?delete=<?php echo $lib->librarian_id;?>">Delete</a>
                                                         </div>
