@@ -153,7 +153,6 @@
                             <div class="widget-heading">
                                 <h5 class="">Notifications</h5>
                             </div>
-
                             <div class="widget-content">
 
                                 <div class="mt-container mx-auto">
@@ -168,7 +167,6 @@
                     </div>
                 </div>
             </div>
-
             <?php
                 require_once('partials/_footer.php');
             ?>
