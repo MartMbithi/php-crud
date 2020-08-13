@@ -10,19 +10,25 @@
     <?php
         require_once('partials/_navbar.php');
         $view = $_GET['view'];
-        $ret="SELECT * FROM  librarians WHERE librarian_id = '$view'"; 
+        $ret="SELECT * FROM  students WHERE student_id = '$view' "; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->execute();
         $res=$stmt->get_result();
-        while($lib=$res->fetch_object())
+        while($std=$res->fetch_object())
         {
-            if($lib->librarian_profile_picture == '')
+            if($std->student_profile_picture == '' && $std->student_gender == 'Male')
             {
-                $profilePic = "<img src='assets/img/librarian.jpg' class='img-thumbnail img-fluid'  alt='avatar'>";
+                $profilePic = "<img src='assets/img/boy.png' class='img-thumbnail img-fluid'  alt='avatar'>";
             }
+
+            else if($std->student_profile_picture == '' && $std->student_gender == 'Female')
+            {
+                $profilePic = "<img src='assets/img/girl-2.png' class='img-thumbnail img-fluid'  alt='avatar'>";
+            }
+
             else
             {
-                $profilePic = "<img src='assets/img/librarian/$lib->librarian_profile_picture' class='img-thumbnail img-fluid' alt='avatar'>";
+                $profilePic = "<img src='assets/img/std/$std->student_profile_picture' class='img-thumbnail img-fluid' alt='avatar'>";
             }
     ?>
     <!--  END NAVBAR  -->
@@ -38,10 +44,10 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>
-                                <li class="breadcrumb-item"><a href="javascript:void(0);">Librarians</a></li>
-                                <li class="breadcrumb-item"><a href="javascript:void(0);">Manage Librarians</a></li>
-                                <li class="breadcrumb-item"><a href="javascript:void(0);">View Librarian</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><span><?php echo $lib->librarian_name;?></span></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Students</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Manage Students</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">View Students</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><span><?php echo $std->student_name;?></span></li>
                             </ol>
                         </nav>
                     </div>
@@ -76,11 +82,11 @@
                             <div class="widget-content widget-content-area">
                                 <div class="d-flex justify-content-between">
                                     <h3 class="">Profile</h3>
-                                    <a href="update_librarian.php?update=<?php echo $lib->librarian_id;?>" class="mt-2 edit-profile"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></a>
+                                    <a href="update_student.php?update=<?php echo $std->student_id;?>" class="mt-2 edit-profile"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></a>
                                 </div>
                                 <div class="text-center user-info">
                                     <?php echo $profilePic;?>
-                                    <p class=""><?php echo $lib->librarian_name;?></p>
+                                    <p class=""><?php echo $std->student_name;?></p>
                                 </div>
                                 <div class="user-info-list">
 
@@ -88,33 +94,37 @@
                                         <ul class="contacts-block list-unstyled">
                                             <li class="contacts-block__item">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-coffee"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
-                                                 <?php echo $lib->librarian_number;?>
+                                                 <?php echo $std->student_reg_number;?>
                                             </li>
                                             <li class="contacts-block__item">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M14 22h5a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-5"></path><polyline points="11 16 15 12 11 8"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>                                                 
                                                 <?php
-                                                    if($lib->librarian_account_status == 'Denied Login')
+                                                    if($std->student_account_status == 'Denied Login')
                                                     {
-                                                        echo "<span class='badge outline-badge-danger'>$lib->librarian_account_status</span>";
+                                                        echo "<span class='badge outline-badge-danger'>$std->student_account_status</span>";
                                                     }
                                                     else
                                                     {
-                                                        echo "<span class='badge outline-badge-success'>$lib->librarian_account_status</span>";
+                                                        echo "<span class='badge outline-badge-success'>$std->student_account_status</span>";
                                                     }
                                                 ?>
                                             </li>
                                             <li class="contacts-block__item">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                                <?php echo $lib->librarian_address;?>
+                                                <?php echo $std->student_address;?>
                                             </li>
                                             <li class="contacts-block__item">
-                                                <a href="mailto:<?php echo $lib->librarian_email;?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                                                <?php echo $lib->librarian_email;?>
-                                            </a>
+                                                <a href="mailto:<?php echo $std->student_email;?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                                    <?php echo $std->student_email;?>
+                                                </a>
                                             </li>
+                                            <li class="contacts-block__item">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>                                                 
+                                                <?php echo $std->student_gender;?>
+                                            </li>                                            
                                             <li class="contacts-block__item">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                                                <?php echo $lib->librarian_phone_number;?>
+                                                <?php echo $std->student_phone_number;?>
                                             </li>
                                         </ul>
                                     </div>                                    
@@ -130,7 +140,7 @@
                                 <h3 class="">Bio</h3>
                                 <p>
                                     <?php
-                                        echo $lib->librarian_bio;
+                                        echo $std->student_bio;
                                     ?>
                                 </p>
                             </div>                                

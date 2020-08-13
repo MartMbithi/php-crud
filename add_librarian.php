@@ -55,7 +55,7 @@
                 $librarian_phone_number = $_POST['librarian_phone_number'];
                 $librarian_address = $_POST['librarian_address'];
                 $librarian_profile_picture = $_FILES["librarian_profile_picture"]["name"];
-                move_uploaded_file($_FILES["librarian_profile_picture"]["tmp_name"],"assets/img/".$_FILES["librarian_profile_picture"]["name"]);
+                move_uploaded_file($_FILES["librarian_profile_picture"]["tmp_name"],"assets/img/librarian/".$_FILES["librarian_profile_picture"]["name"]);
                 $librarian_account_status = $_POST['librarian_account_status'];
                 $librarian_login_id = $_POST['librarian_login_id'];     
                 $librarian_bio = $_POST['librarian_bio'];          

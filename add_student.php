@@ -62,7 +62,7 @@
                 $student_phone_number = $_POST['student_phone_number'];
                 $student_address = $_POST['student_address'];
                 $student_profile_picture = $_FILES['student_profile_picture']['name'];
-                move_uploaded_file($_FILES["student_profile_picture"]["tmp_name"],"assets/img/".$_FILES["student_profile_picture"]["name"]);
+                move_uploaded_file($_FILES["student_profile_picture"]["tmp_name"],"assets/img/std/".$_FILES["student_profile_picture"]["name"]);
                 $student_account_status = $_POST['student_account_status'];
                 $student_login_id = $_POST['student_login_id'];     
                 $student_bio = $_POST['student_bio'];          
