@@ -19,6 +19,7 @@
     <script src="plugins/sweetalerts/promise-polyfill.js"></script>
     <link href="assets/css/components/custom-sweetalert.css" rel="stylesheet" type="text/css" />
     <link href="plugins/sweetalerts/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <script src="assets/js/swal.js"></script>
     <!--Load Swal-->
     <?php if(isset($success)) {?>
     <!--This code for injecting success alert-->
