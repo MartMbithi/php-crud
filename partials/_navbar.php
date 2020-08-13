@@ -8,7 +8,7 @@
                     </a>
                 </li>
                 <li class="nav-item theme-text">
-                    <a href="index-2.html" class="nav-link"> CORK </a>
+                    <a href="dashboard.php" class="nav-link">LMS</a>
                 </li>
             </ul>
 
