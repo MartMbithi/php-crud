@@ -40,13 +40,14 @@
                 move_uploaded_file($_FILES["librarian_profile_picture"]["tmp_name"],"assets/img/".$_FILES["librarian_profile_picture"]["name"]);
                 $librarian_account_status = $_POST['librarian_account_status'];
                 $librarian_login_id = $_POST['librarian_login_id'];  
-                $update = $_GET['update'];             
+                $update = $_GET['update']; 
+                $librarian_bio = $_POST['librarian_bio'];         
 
                 //Insert Captured information to a database table
-                $postQuery="UPDATE librarians SET librarian_name =?, librarian_number =?, librarian_email =?, librarian_phone_number =?, librarian_address =?, librarian_profile_picture =?, librarian_account_status =?, librarian_login_id =? WHERE librarian_id =?";
+                $postQuery="UPDATE librarians SET librarian_bio=?, librarian_name =?, librarian_number =?, librarian_email =?, librarian_phone_number =?, librarian_address =?, librarian_profile_picture =?, librarian_account_status =?, librarian_login_id =? WHERE librarian_id =?";
                 $postStmt = $mysqli->prepare($postQuery);
                 //bind paramaters
-                $rc=$postStmt->bind_param('ssssssssi', $librarian_name, $librarian_number, $librarian_email, $librarian_phone_number, $librarian_address, $librarian_profile_picture, $librarian_account_status, $librarian_login_id, $update);
+                $rc=$postStmt->bind_param('sssssssssi', $librarian_bio, $librarian_name, $librarian_number, $librarian_email, $librarian_phone_number, $librarian_address, $librarian_profile_picture, $librarian_account_status, $librarian_login_id, $update);
                 $postStmt->execute();
                 //declare a varible which will be passed to alert function
                 if($postStmt)
@@ -173,6 +174,12 @@
                                                 <label for="inputCity">Login Id</label>
                                                 <input type="text" name="librarian_login_id" value="<?php echo $lib->librarian_login_id;?>" class="form-control">
                                             </div>                                            
+                                        </div>
+                                        <div class="form-row mb-4">
+                                            <div class="form-group col-md-12">
+                                                <label for="inputAddress">Bio | About | Description</label>
+                                                <textarea  name="librarian_bio" rows="5" class="form-control"><?php echo $librarian_bio;?></textarea>
+                                            </div>
                                         </div>
                                       <button type="submit" name="update_librarian" class="btn btn-primary mt-3">Update</button>
                                     </form>
