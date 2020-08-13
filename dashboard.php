@@ -4,6 +4,7 @@
     include('config/checklogin.php');
     check_login();
     require_once('partials/_head.php');
+    require_once('partials/_analytics.php');
 ?>
 <body>
     <!-- BEGIN LOADER -->
@@ -59,7 +60,7 @@
                             <div class="widget-content">
                                 <div class="w-content">
                                     <div class="w-info">
-                                        <h6 class="value">45,141</h6>
+                                        <h6 class="value"><?php echo $std;?></h6>
                                         <p class="">Enrolled Students</p>
                                     </div>
                                     <div class="">
@@ -77,7 +78,7 @@
                             <div class="widget-content">
                                 <div class="w-content">
                                     <div class="w-info">
-                                        <h6 class="value">45,141</h6>
+                                        <h6 class="value"><?php echo $libstaff;?></h6>
                                         <p class="">Librarians</p>
                                     </div>
                                     <div class="">
@@ -95,7 +96,7 @@
                             <div class="widget-content">
                                 <div class="w-content">
                                     <div class="w-info">
-                                        <h6 class="value">45,141</h6>
+                                        <h6 class="value"><?php echo $bookCats;?></h6>
                                         <p class="">Book Categories</p>
                                     </div>
                                     <div class="">
@@ -113,7 +114,7 @@
                             <div class="widget-content">
                                 <div class="w-content">
                                     <div class="w-info">
-                                        <h6 class="value">45,141</h6>
+                                        <h6 class="value"><?php echo $books;?></h6>
                                         <p class="">Books</p>
                                     </div>
                                     <div class="">
@@ -262,6 +263,7 @@
     <!-- END MAIN CONTAINER -->
     <?php
         require_once('partials/_scripts.php');
+        require_once('partials/_libraryOperations.php');
     ?>
 </body>
 

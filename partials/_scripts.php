@@ -18,7 +18,6 @@
 </script>
 <script src="assets/js/custom.js"></script>
 <script src="plugins/apex/apexcharts.min.js"></script>
-<script src="assets/js/dashboard/dash_1.js"></script>
 <script src="plugins/jquery-step/jquery.steps.min.js"></script>
 <script src="plugins/jquery-step/custom-jquery.steps.js"></script>
 <script src="plugins/highlight/highlight.pack.js"></script>
@@ -77,7 +76,6 @@
     } );
 </script>
 <script src="plugins/apex/apexcharts.min.js"></script>
-<script src="assets/js/dashboard/dash_2.js"></script>
 <script src="plugins/dropify/dropify.min.js"></script>
 <script src="plugins/blockui/jquery.blockUI.min.js"></script>
 <script src="assets/js/users/account-settings.js"></script>
