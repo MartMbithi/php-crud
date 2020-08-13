@@ -16,7 +16,7 @@
             $login_user_name = $_SESSION['login_user_name'];
             $admin_number = $_POST['admin_number'];
             $admin_username = $_POST['admin_username'];
-            $admin_profile_pic = $_FILES['admin_profile_pic'];
+            $admin_profile_pic = $_FILES['admin_profile_pic']["name"];
             move_uploaded_file($_FILES["admin_profile_pic"]["tmp_name"],"assets/img/".$_FILES["admin_profile_pic"]["name"]);
             $admin_bio = $_POST['admin_bio'];
             $admin_phone_number = $_POST['admin_phone_number'];
@@ -31,7 +31,7 @@
             //declare a varible which will be passed to alert function
             if($postStmt)
             {
-                $success = "Profile Updated" && header("refresh:1; url=profile.php");
+                $success = "Profile Updated";// && header("refresh:1; url=profile.php");
             }
             else 
             {
