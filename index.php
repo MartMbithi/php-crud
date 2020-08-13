@@ -13,7 +13,7 @@
        $stmt -> bind_result($login_user_permission, $login_user_name, $login_password, $login_id);//bind result
        $rs=$stmt->fetch();
        $_SESSION['login_id'] = $login_id;
-       $_SESSION['login_user_name'] = $login_username;
+       $_SESSION['login_user_name'] = $login_user_name;
        if($rs && $login_user_permission == '1')
        {
          //if its sucessfull
