@@ -150,6 +150,47 @@
                 </ul>
             </li>
 
+            <li class="menu">
+                <a href="#reports" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>                        
+                        <span>Reports</span>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled" id="reports" data-parent="#accordionExample">
+                    <li>
+                        <a href="add_charges.php">Librarians </a>
+                    </li>
+                    <li>
+                        <a href="manage_charges.php">Students </a>
+                    </li>
+                    <li>
+                        <a href="manage_charges.php">Book Categories </a>
+                    </li>
+                    <li>
+                        <a href="manage_charges.php">Books </a>
+                    </li>
+                    <li>
+                        <a href="manage_charges.php">Library Operations </a>
+                    </li>
+                    <li>
+                        <a href="manage_charges.php">Finances</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="menu">
+                <a href="logout.php" aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M10 22H5a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h5"></path><polyline points="17 16 21 12 17 8"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>                         
+                        <span>End Session</span>
+                    </div>
+                </a>
+            </li>
+
             <!--<li class="menu">
                 <a href="#pr" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
