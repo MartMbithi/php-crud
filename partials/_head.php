@@ -16,5 +16,42 @@
     <link href="assets/css/authentication/form-2.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="assets/css/forms/theme-checkbox-radio.css">
     <link rel="stylesheet" type="text/css" href="assets/css/forms/switches.css">
+    <script src="plugins/sweetalerts/promise-polyfill.js"></script>
+    <link href="assets/css/components/custom-sweetalert.css" rel="stylesheet" type="text/css" />
+    <link href="plugins/sweetalerts/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <!--Load Swal-->
+    <?php if(isset($success)) {?>
+    <!--This code for injecting success alert-->
+        <script>
+                    setTimeout(function () 
+                    { 
+                        swal("Success","<?php echo $success;?>","success");
+                    },
+                        100);
+                    
+        </script>
 
+    <?php } ?>
+    <?php if(isset($err)) {?>
+    <!--This code for injecting error alert-->
+        <script>
+                    setTimeout(function () 
+                    { 
+                        swal("Failed","<?php echo $err;?>","error");
+                    },
+                        100);
+        </script>
+
+    <?php } ?>
+    <?php if(isset($info)) {?>
+    <!--This code for injecting info alert-->
+        <script>
+                    setTimeout(function () 
+                    { 
+                        swal("Success","<?php echo $info;?>","info");
+                    },
+                        100);
+        </script>
+
+    <?php } ?>
 </head>
