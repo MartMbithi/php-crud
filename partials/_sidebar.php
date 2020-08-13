@@ -56,7 +56,7 @@
                         <a href="add_student.php"> Add </a>
                     </li>
                     <li>
-                        <a href="manage_student.php"> Manage  </a>
+                        <a href="manage_students.php"> Manage  </a>
                     </li>
                 </ul>
             </li>
