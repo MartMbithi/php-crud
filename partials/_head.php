@@ -16,6 +16,9 @@
     <link href="assets/css/authentication/form-2.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="assets/css/forms/theme-checkbox-radio.css">
     <link rel="stylesheet" type="text/css" href="assets/css/forms/switches.css">
+    <link href="assets/css/users/user-profile.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/users/account-setting.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="plugins/dropify/dropify.min.css">
     <script src="assets/js/swal.js"></script>
     <!--Load Swal-->
     <?php if(isset($success)) {?>
