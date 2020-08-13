@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,8 +16,6 @@
     <link rel="stylesheet" type="text/css" href="assets/css/forms/switches.css">
 </head>
 <body class="form">
-    
-
     <div class="form-container outer">
         <div class="form-form">
             <div class="form-form-wrap">
