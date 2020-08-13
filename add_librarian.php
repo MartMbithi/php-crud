@@ -57,13 +57,14 @@
                 $librarian_profile_picture = $_FILES["librarian_profile_picture"]["name"];
                 move_uploaded_file($_FILES["librarian_profile_picture"]["tmp_name"],"assets/img/".$_FILES["librarian_profile_picture"]["name"]);
                 $librarian_account_status = $_POST['librarian_account_status'];
-                $librarian_login_id = $_POST['librarian_login_id'];               
+                $librarian_login_id = $_POST['librarian_login_id'];     
+                $librarian_bio = $_POST['librarian_bio'];          
 
                 //Insert Captured information to a database table
-                $postQuery="INSERT INTO librarians (librarian_name, librarian_number, librarian_email, librarian_phone_number, librarian_address, librarian_profile_picture, librarian_account_status, librarian_login_id) VALUES (?,?,?,?,?,?,?,?)";
+                $postQuery="INSERT INTO librarians (librarian_bio, librarian_name, librarian_number, librarian_email, librarian_phone_number, librarian_address, librarian_profile_picture, librarian_account_status, librarian_login_id) VALUES (?,?,?,?,?,?,?,?,?)";
                 $postStmt = $mysqli->prepare($postQuery);
                 //bind paramaters
-                $rc=$postStmt->bind_param('ssssssss', $librarian_name, $librarian_number, $librarian_email, $librarian_phone_number, $librarian_address, $librarian_profile_picture, $librarian_account_status, $librarian_login_id);
+                $rc=$postStmt->bind_param('sssssssss', $librarian_bio, $librarian_name, $librarian_number, $librarian_email, $librarian_phone_number, $librarian_address, $librarian_profile_picture, $librarian_account_status, $librarian_login_id);
                 $postStmt->execute();
                 //declare a varible which will be passed to alert function
                 if($postStmt)
@@ -181,6 +182,12 @@
                                                 <label for="inputCity">Login Id</label>
                                                 <input type="text" name="librarian_login_id" class="form-control" value="<?php echo sha1(md5($beta));?>">
                                             </div>                                            
+                                        </div>
+                                        <div class="form-row mb-4">
+                                            <div class="form-group col-md-12">
+                                                <label for="inputAddress">Bio | About | Description</label>
+                                                <textarea  name="librarian_bio" rows="5" class="form-control"></textarea>
+                                            </div>
                                         </div>
                                       <button type="submit" name="add_librarian" class="btn btn-primary mt-3">Add Librarian</button>
                                     </form>

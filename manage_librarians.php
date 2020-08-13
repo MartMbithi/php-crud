@@ -3,7 +3,6 @@
     include('config/config.php');
     include('config/checklogin.php');
     check_login();
-    require_once('partials/_head.php');
     //Delete Librarian Account
     if(isset($_GET['delete']))
     {
@@ -21,7 +20,9 @@
          {
              $err = "Try Again Later";
          }
-      }
+    }
+    require_once('partials/_head.php');
+    
 ?>
 <body>
     
@@ -123,7 +124,7 @@
                                                             <a class="dropdown-item" href="view_librarian.php?view=<?php echo $lib->librarian_id;?>">View</a>
                                                             <a class="dropdown-item" href="update_librarian.php?update=<?php echo $lib->librarian_id;?>">Update</a>
                                                             <div class="dropdown-divider"></div>
-                                                            <a class="dropdown-item" href="manage_librarian.php?delete=<?php echo $lib->librarian_id;?>">Delete</a>
+                                                            <a class="dropdown-item" href="manage_librarians.php?delete=<?php echo $lib->librarian_id;?>">Delete</a>
                                                         </div>
                                                     </div>
                                                 </td>

@@ -178,7 +178,7 @@
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-12">
                                                 <label for="inputAddress">Bio | About | Description</label>
-                                                <textarea  name="librarian_bio" rows="5" class="form-control"><?php echo $librarian_bio;?></textarea>
+                                                <textarea  name="librarian_bio" rows="5" class="form-control"><?php echo $lib->librarian_bio;?></textarea>
                                             </div>
                                         </div>
                                       <button type="submit" name="update_librarian" class="btn btn-primary mt-3">Update</button>
