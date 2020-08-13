@@ -3,6 +3,42 @@
     include('config/config.php');
     include('config/checklogin.php');
     check_login();
+    //Update Profile
+    if(isset($_POST['updateProfile']))
+    {
+        if ( empty($_POST["admin_number"]) || empty($_POST['admin_email']) || empty($_POST['admin_phone_number'])) 
+        {
+            $err="Empty Fields Not Allowed";
+        }
+        else
+        {
+            
+            $login_user_name = $_SESSION['login_user_name'];
+            $admin_number = $_POST['admin_number'];
+            $admin_username = $_POST['admin_username'];
+            $admin_profile_pic = $_FILES['admin_profile_pic'];
+            move_uploaded_file($_FILES["admin_profile_pic"]["tmp_name"],"assets/img/".$_FILES["admin_profile_pic"]["name"]);
+            $admin_bio = $_POST['admin_bio'];
+            $admin_phone_number = $_POST['admin_phone_number'];
+                        
+
+            //Insert Captured information to a database table
+            $postQuery="UPDATE administrator SET admin_number =?, admin_username =?, admin_bio =?, admin_phone_number =?, admin_profile_pic =? WHERE admin_email =?";
+            $postStmt = $mysqli->prepare($postQuery);
+            //bind paramaters
+            $rc=$postStmt->bind_param('ssssss', $admin_number, $admin_username, $admin_bio, $admin_phone_number, $admin_profile_pic, $login_user_name);
+            $postStmt->execute();
+            //declare a varible which will be passed to alert function
+            if($postStmt)
+            {
+                $success = "Profile Updated" && header("refresh:1; url=profile.php");
+            }
+            else 
+            {
+                $err = "Please Try Again Or Try Later";
+            }
+        }
+    }
     require_once('partials/_head.php');
 ?>
 <body>
@@ -71,7 +107,7 @@
                         <div class="scrollspy-example" data-spy="scroll" data-target="#account-settings-scroll" data-offset="-100">
                             <div class="row">
                                 <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
-                                    <form id="general-info" class="section general-info">
+                                    <form id="general-info" method="POST" class="section general-info">
                                         <div class="info">
                                             <h6 class="">Update Profile</h6>
                                             <div class="row">
@@ -86,22 +122,28 @@
                                                         <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
                                                             <div class="form">
                                                                 <div class="row">
-                                                                    <div class="col-sm-6">
+                                                                    <div class="col-sm-4">
                                                                         <div class="form-group">
                                                                             <label for="fullName">Full Name</label>
-                                                                            <input type="text" class="form-control mb-4" value="<?php echo $admin->admin_username;?>">
+                                                                            <input type="text" name="admin_username" class="form-control mb-4"  value="<?php echo $admin->admin_username;?>">
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-sm-6">
+                                                                    <div class="col-sm-4">
                                                                         <div class="form-group">
                                                                             <label for="fullName">Admin Number</label>
-                                                                            <input type="text" class="form-control mb-4" value="<?php echo $admin->admin_number;?>">
+                                                                            <input type="text" name="admin_number" class="form-control mb-4" value="<?php echo $admin->admin_number;?>">
                                                                         </div>
-                                                                    </div>                                                                    
+                                                                    </div> 
+                                                                    <div class="col-sm-4">
+                                                                        <div class="form-group">
+                                                                            <label for="fullName">Admin Email</label>
+                                                                            <input type="email" name="admin_email" readonly class="form-control mb-4" value="<?php echo $admin->admin_email;?>">
+                                                                        </div>
+                                                                    </div>                                                                     
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="profession">Admin Phone Number</label>
-                                                                    <input type="text" class="form-control mb-4"  value="<?php echo $admin->admin_phone_number;?>">
+                                                                    <input type="text" class="form-control mb-4" name="admin_phone_number"  value="<?php echo $admin->admin_phone_number;?>">
                                                                 </div>
                                                             </div>
                                                         </div>
