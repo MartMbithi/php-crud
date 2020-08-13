@@ -1,21 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+    session_start();
+    include('config/config.php');
+    require_once('config/code-generator.php');
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>Password Recovery Boxed | CORK - Multipurpose Bootstrap Dashboard Template </title>
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/authentication/form-2.css" rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
-    <link rel="stylesheet" type="text/css" href="assets/css/forms/theme-checkbox-radio.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/forms/switches.css">
-</head>
+    if(isset($_POST['reset_pwd']))
+    {
+        if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+        {
+            $err = 'Invalid Email';
+        }
+        $checkEmail = mysqli_query($mysqli, "SELECT `login_user_name` FROM `login` WHERE `login_user_name` = '".$_POST['email']."'") or exit(mysqli_error($mysqli));
+        if( mysqli_num_rows($checkEmail) > 0 )  {
+            //exit('This email is already being used');
+            //Reset Password
+            $reset_code = $_POST['reset_code'];
+            $reset_token = sha1(md5($_POST['reset_token']));
+            $reset_status = $_POST['reset_status'];
+            $email = $_POST['email'];
+            $query="INSERT INTO password_resets (email, reset_code, reset_token, reset_status) VALUES (?,?,?,?)";
+            $reset = $mysqli->prepare($query);
+            $rc=$reset->bind_param('ssss', $email, $reset_code, $reset_token, $reset_status);
+            $reset->execute();
+            if($reset)
+            {
+                $success = "Password Reset Instructions Sent To Your Email";
+                // && header("refresh:1; url=index.php");
+            }
+            else
+            {
+                $err = "Please Try Again Or Try Later";
+            }
+             
+        }
+        else 
+        {
+            $err = "No account with that email";
+        }
+            
+    }
+ require_once('partials/_head.php');
+?>
 <body class="form no-image-content">
     
 
@@ -24,29 +48,31 @@
             <div class="form-form-wrap">
                 <div class="form-container">
                     <div class="form-content">
-
                         <h1 class="">Password Recovery</h1>
                         <p class="signup-link recovery">Enter your email and instructions will sent to you!</p>
-                        <form class="text-left">
+                        <form  method = "post" class="text-left">
                             <div class="form">
-
                                 <div id="email-field" class="field-wrapper input">
                                     <div class="d-flex justify-content-between">
-                                        <label for="email">EMAIL</label>
+                                        <label for="email">Email</label>
                                     </div>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-at-sign"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg>
                                     <input id="email" name="email" type="text" class="form-control" value="" placeholder="Email">
                                 </div>
-
+                                <div style="display:none">
+                                    <input type="text" value="<?php echo $tk;?>" name="reset_token">
+                                    <input type="text" value="<?php echo $rc;?>" name="reset_code">
+                                    <input type="text" value="Pending" name="reset_status">
+                                </div>
                                 <div class="d-sm-flex justify-content-between">
 
                                     <div class="field-wrapper">
-                                        <button type="submit" class="btn btn-primary" value="">Reset</button>
+                                        <button type="submit" name="reset_pwd" class="btn btn-primary" value="">Reset</button>
                                     </div>
                                 </div>
-
                             </div>
                         </form>
+
 
                     </div>                    
                 </div>
@@ -54,15 +80,9 @@
         </div>
     </div>
 
-    
-    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-    <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
-    <script src="bootstrap/js/popper.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-    
-    <!-- END GLOBAL MANDATORY SCRIPTS -->
-    <script src="assets/js/authentication/form-2.js"></script>
-
+    <?php
+        require_once('partials/_head.php');
+    ?>
 </body>
 
 </html>
