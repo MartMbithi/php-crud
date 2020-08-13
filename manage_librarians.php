@@ -93,6 +93,7 @@
                                             $res=$stmt->get_result();
                                             while($lib=$res->fetch_object())
                                             {
+
                                         ?>
                                             <tr>
                                                 <td><?php echo $lib->librarian_name;?></td>
@@ -100,7 +101,18 @@
                                                 <td><?php echo $lib->librarian_email;?></td>
                                                 <td><?php echo $lib->librarian_phone_number;?></td>
                                                 <td><?php echo $lib->librarian_address;?></td>
-                                                <td><?php echo $lib->librarian_account_status;?></td>
+                                                <td>
+                                                    <?php
+                                                        if($lib->librarian_account_status == 'Denied Login')
+                                                        {
+                                                            echo "<span class='badge outline-badge-danger'>$lib->librarian_account_status</span>";
+                                                        }
+                                                        else
+                                                        {
+                                                            echo "<span class='badge outline-badge-success'>$lib->librarian_account_status</span>";
+                                                        }
+                                                    ?>
+                                                </td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-dark btn-sm">Manage</button>
