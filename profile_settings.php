@@ -16,7 +16,7 @@
             $login_user_name = $_SESSION['login_user_name'];
             $admin_number = $_POST['admin_number'];
             $admin_username = $_POST['admin_username'];
-            $admin_profile_pic = $_FILES['admin_profile_pic']["name"];
+            $admin_profile_pic = $_FILES["admin_profile_pic"]["name"];
             move_uploaded_file($_FILES["admin_profile_pic"]["tmp_name"],"assets/img/".$_FILES["admin_profile_pic"]["name"]);
             $admin_bio = $_POST['admin_bio'];
             $admin_phone_number = $_POST['admin_phone_number'];
@@ -31,7 +31,7 @@
             //declare a varible which will be passed to alert function
             if($postStmt)
             {
-                $success = "Profile Updated";// && header("refresh:1; url=profile.php");
+                $success = "Profile Updated" && header("refresh:1; url=profile.php");
             }
             else 
             {
@@ -107,7 +107,7 @@
                         <div class="scrollspy-example" data-spy="scroll" data-target="#account-settings-scroll" data-offset="-100">
                             <div class="row">
                                 <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
-                                    <form id="general-info" method="POST" class="section general-info">
+                                    <form id="general-info" method="POST" enctype="multipart/form-data" class="section general-info">
                                         <div class="info">
                                             <h6 class="">Update Profile</h6>
                                             <div class="row">
@@ -115,10 +115,11 @@
                                                     <div class="row">
                                                         <div class="col-xl-2 col-lg-12 col-md-4">
                                                             <div class="upload mt-4 pr-md-4">
-                                                                <input type="file" name="admin_profile_pic" id="input-file-max-fs" class="dropify" data-default-file="<?php echo $default_img;?>" data-max-file-size="2M" />
+                                                                <input type="file" name="admin_profile_pic"  class="dropify" data-default-file="<?php echo $default_img;?>" data-max-file-size="2M" />
                                                                 <p class="mt-2"><i class="flaticon-cloud-upload mr-1"></i> Upload Picture</p>
                                                             </div>
                                                         </div>
+
                                                         <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
                                                             <div class="form">
                                                                 <div class="row">
