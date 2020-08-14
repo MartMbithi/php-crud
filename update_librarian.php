@@ -38,16 +38,16 @@
                 $librarian_address = $_POST['librarian_address'];
                 $librarian_profile_picture = $_FILES["librarian_profile_picture"]["name"];
                 move_uploaded_file($_FILES["librarian_profile_picture"]["tmp_name"],"assets/img/librarian/".$_FILES["librarian_profile_picture"]["name"]);
-                $librarian_account_status = $_POST['librarian_account_status'];
+                //$librarian_account_status = $_POST['librarian_account_status'];
                 $librarian_login_id = $_POST['librarian_login_id'];  
                 $update = $_GET['update']; 
                 $librarian_bio = $_POST['librarian_bio'];         
 
                 //Insert Captured information to a database table
-                $postQuery="UPDATE librarians SET librarian_bio=?, librarian_name =?, librarian_number =?, librarian_email =?, librarian_phone_number =?, librarian_address =?, librarian_profile_picture =?, librarian_account_status =?, librarian_login_id =? WHERE librarian_id =?";
+                $postQuery="UPDATE librarians SET librarian_bio=?, librarian_name =?, librarian_number =?, librarian_email =?, librarian_phone_number =?, librarian_address =?, librarian_profile_picture =?, librarian_login_id =? WHERE librarian_id =?";
                 $postStmt = $mysqli->prepare($postQuery);
                 //bind paramaters
-                $rc=$postStmt->bind_param('sssssssssi', $librarian_bio, $librarian_name, $librarian_number, $librarian_email, $librarian_phone_number, $librarian_address, $librarian_profile_picture, $librarian_account_status, $librarian_login_id, $update);
+                $rc=$postStmt->bind_param('ssssssssi', $librarian_bio, $librarian_name, $librarian_number, $librarian_email, $librarian_phone_number, $librarian_address, $librarian_profile_picture,  $librarian_login_id, $update);
                 $postStmt->execute();
                 //declare a varible which will be passed to alert function
                 if($postStmt)
@@ -158,10 +158,11 @@
                                                 <label for="inputCity">Address</label>
                                                 <input type="text" name="librarian_address" value="<?php echo $lib->librarian_address;?>" class="form-control" id="inputCity">
                                             </div>
-                                            <div class="form-group col-md-4">
+                                            <div class="form-group col-md-6">
                                                 <label for="inputState">Profile Picture</label>
                                                 <input type="file" name="librarian_profile_picture" class="form-control btn btn-outline-success">                                                
                                             </div>
+                                            <!--
                                             <div class="form-group col-md-2">
                                                 <label for="inputZip">Account Status</label>
                                                 <select name="librarian_account_status" class="form-control" >
@@ -170,6 +171,7 @@
                                                     <option>Denied Login</option>
                                                 </select>
                                             </div>
+                                            -->
                                             <div class="form-group col-md-6" style="display:none">
                                                 <label for="inputCity">Login Id</label>
                                                 <input type="text" name="librarian_login_id" value="<?php echo $lib->librarian_login_id;?>" class="form-control">

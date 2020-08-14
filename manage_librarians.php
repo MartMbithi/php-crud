@@ -21,6 +21,30 @@
              $err = "Try Again Later";
          }
     }
+    //Revoke Login
+    if(isset($_GET['revoke_login']))
+    {
+          $id= $_GET['revoke_login'];
+          $adn="DELETE FROM  login  WHERE  login_id = ?";
+          $postQuery="UPDATE librarians SET librarian_account_status= 'Denied Login' WHERE librarian_login_id =?";
+          $stmt= $mysqli->prepare($adn);
+          $postStmt = $mysqli->prepare($postQuery);
+          $stmt->bind_param('s', $id);
+          $postStmt->bind_param('s', $id);
+          $stmt->execute();
+          $postStmt->execute();
+          $stmt->close();	
+          $postStmt->close(); 
+         if($stmt && $postStmt)
+         {
+             $success = "Login Permissions Revoked" && header("refresh:1; url=manage_librarians.php");
+         }
+         else
+         {
+             $err = "Try Again Later";
+         }
+    }
+
     require_once('partials/_head.php');
     
 ?>
@@ -81,7 +105,7 @@
                                             <th>Email</th>
                                             <th>Phone</th>
                                             <th>Address</th>
-                                            <th>Account Status</th>
+                                            <th>Account Login Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -123,6 +147,28 @@
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuReference1">
                                                             <a class="dropdown-item" href="view_librarian.php?view=<?php echo $lib->librarian_id;?>">View</a>
                                                             <a class="dropdown-item" href="update_librarian.php?update=<?php echo $lib->librarian_id;?>">Update</a>
+                                                            <?php
+                                                                // Deny and Allow Login Permissions Based on Account Status
+                                                                if($lib->librarian_account_status == 'Denied Login')
+                                                                {
+                                                                    echo 
+                                                                    "
+                                                                        <a class='dropdown-item text-success' href='login_permissions.php?user=$lib->librarian_id'>
+                                                                            Give Login Permissions
+                                                                        </a>
+                                                                    ";
+                                                                }
+                                                                else
+                                                                {
+                                                                    echo 
+                                                                    "
+                                                                        <a class='dropdown-item text-danger' href='manage_librarians.php?revoke_login=$lib->librarian_login_id'>
+                                                                            Revoke Login Permissions
+                                                                        </a>
+                                                                    ";
+                                                                }
+
+                                                            ?>
                                                             <div class="dropdown-divider"></div>
                                                             <a class="dropdown-item" href="manage_librarians.php?delete=<?php echo $lib->librarian_id;?>">Delete</a>
                                                         </div>
