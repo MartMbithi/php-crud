@@ -178,7 +178,7 @@
                     </li>
                     <li>
                         <a href="fines.php">Fines</a>
-                    </li>
+                    </li> 
                 </ul>
             </li>
 

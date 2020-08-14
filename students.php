@@ -99,14 +99,12 @@
                                 <table id="html5-extension" class="table table-hover non-hover" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
                                             <th>Reg Number</th>
+                                            <th>Name</th>
                                             <th>Email</th>
                                             <th>Phone</th>
                                             <th>Address</th>
                                             <th>Gender</th>
-                                            <th>Account Status</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -121,60 +119,18 @@
 
                                         ?>
                                             <tr>
+                                                <td>
+                                                    <span class="badge outline-badge-success">
+                                                        <a href="view_student.php?view=<?php echo $std->student_id;?>">
+                                                            <?php echo $std->student_reg_number;?>
+                                                        </a>
+                                                    </span>
+                                                </td>
                                                 <td><?php echo $std->student_name;?></td>
-                                                <td><?php echo $std->student_reg_number;?></td>
                                                 <td><?php echo $std->student_email;?></td>
                                                 <td><?php echo $std->student_phone_number;?></td>
                                                 <td><?php echo $std->student_address;?></td>
-                                                <td><?php echo $std->student_gender;?></td>
-                                                <td>
-                                                    <?php
-                                                        if($std->student_account_status == 'Denied Login')
-                                                        {
-                                                            echo "<span class='badge outline-badge-danger'>$std->student_account_status</span>";
-                                                        }
-                                                        else
-                                                        {
-                                                            echo "<span class='badge outline-badge-success'>$std->student_account_status</span>";
-                                                        }
-                                                    ?>
-                                                </td>
-                                                <td>
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn btn-dark btn-sm">Manage</button>
-                                                        <button type="button" class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuReference1">
-                                                            <a class="dropdown-item" href="view_student.php?view=<?php echo $std->student_id;?>">View</a>
-                                                            <a class="dropdown-item" href="update_student.php?update=<?php echo $std->student_id;?>">Update</a>
-                                                            <?php
-                                                                // Deny and Allow Login Permissions Based on Account Status
-                                                                if($std->student_account_status == 'Denied Login')
-                                                                {
-                                                                    echo 
-                                                                    "
-                                                                        <a class='dropdown-item text-success' href='student_login_permissions.php?user=$std->student_id'>
-                                                                            Give Login Permissions
-                                                                        </a>
-                                                                    ";
-                                                                }
-                                                                else
-                                                                {
-                                                                    echo 
-                                                                    "
-                                                                        <a class='dropdown-item text-danger' href='manage_students.php?revoke_login=$std->student_login_id'>
-                                                                            Revoke Login Permissions
-                                                                        </a>
-                                                                    ";
-                                                                }
-
-                                                            ?>
-                                                            <div class="dropdown-divider"></div>
-                                                            <a class="dropdown-item" href="manage_students.php?delete=<?php echo $std->student_id;?>">Delete</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
+                                                <td><?php echo $std->student_gender;?></td>                                               
                                             </tr>
                                         <?php }?>
                                     </tbody>
