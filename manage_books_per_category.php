@@ -3,6 +3,25 @@
     include('config/config.php');
     include('config/checklogin.php');
     check_login();
+    //Delete Book
+    if(isset($_GET['delete']))
+    {
+          $category = $_GET['category'];
+          $id=intval($_GET['delete']);
+          $adn="DELETE FROM  books  WHERE  book_id = ?";
+          $stmt= $mysqli->prepare($adn);
+          $stmt->bind_param('i',$id);
+          $stmt->execute();
+          $stmt->close();	 
+         if($stmt)
+         {
+             $success = "Deleted" && header("refresh:1; url=manage_books_per_category.php?category=$category");
+         }
+         else
+         {
+             $err = "Try Again Later";
+         }
+    }
     require_once('partials/_head.php');
 ?>
 <body>
@@ -69,13 +88,13 @@
                                     <tbody>
                                         <?php
                                             //Get all Books
-                                            $ret="SELECT * FROM books  "; 
+                                            $category = $_GET['category'];
+                                            $ret="SELECT * FROM books  WHERE book_category_id = '$category' "; 
                                             $stmt= $mysqli->prepare($ret) ;
                                             $stmt->execute();
                                             $res=$stmt->get_result();
                                             while($book=$res->fetch_object())
                                             {
-
                                         ?>
                                             <tr>
                                                 <td><?php echo $book->book_title;?></td>
@@ -85,11 +104,18 @@
                                                 <td><?php echo $book->book_status;?></td>
                                                 <td><?php echo $book->book_copies;?> Copies</td>
                                                 <td>
-                                                    <a href="manage_books_per_category.php?category=<?php echo $cat->category_id;?>" class="badge outline-badge-success text-primary bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add New Book Under <?php echo $cat->category_name;?> Category">
-                                                        Manage Books
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> 
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>                                                   
-                                                    </a>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-dark btn-sm">Manage</button>
+                                                        <button type="button" class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuReference1">
+                                                            <a class="dropdown-item" href="view_book.php?view=<?php echo $book->book_id;?>">View</a>
+                                                            <a class="dropdown-item" href="update_book.php?update=<?php echo $book->book_id;?>">Update</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a class="dropdown-item" href="manage_books_per_category.php?delete=<?php echo $book->book_id;?>&category=<?php echo $book->book_category_id;?>">Delete</a>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         <?php }?>

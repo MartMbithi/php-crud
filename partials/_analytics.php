@@ -24,7 +24,7 @@
     $stmt->close();
 
     //4. Books
-    $query ="SELECT COUNT(*) FROM `books` ";
+    $query ="SELECT SUM(book_copies) FROM `books` ";
     $stmt = $mysqli->prepare($query);
     $stmt ->execute();
     $stmt->bind_result($books);
