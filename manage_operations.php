@@ -57,13 +57,13 @@
                                 <table id="html5-extension" class="table table-hover non-hover" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Operation Number</th>
-                                            <th>Operation Checksum</th>
-                                            <th>Operation Type</th>
+                                            <th>Number</th>
+                                            <th>Checksum</th>
+                                            <th>Type</th>
                                             <th>Book Isbn Number</th>
                                             <th>Book Title</th>
                                             <th>Book Author</th>
-                                            <th>Operation Created At</th>
+                                            <th>Created At</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
