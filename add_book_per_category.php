@@ -25,10 +25,10 @@
                 $book_copies = $_POST['book_copies'];
                      
                 //Insert Captured information to a database table
-                $postQuery="INSERT INTO books (book_category_id, book_title, book_author, book_isbn_no, book_coverimage, book_status, book_summary, book_copies) VALUES(?,?,?,?,?,?,?,?)";
+                $postQuery="INSERT INTO books (book_category_id, book_publisher, book_title, book_author, book_isbn_no, book_coverimage, book_status, book_summary, book_copies) VALUES(?,?,?,?,?,?,?,?,?)";
                 $postStmt = $mysqli->prepare($postQuery);
                 //bind paramaters
-                $rc=$postStmt->bind_param('ssssssss', $category, $book_title, $book_author, $book_isbn_no, $book_coverimage, $book_status, $book_summary, $book_copies);
+                $rc=$postStmt->bind_param('sssssssss', $category, $book_publisher, $book_title, $book_author, $book_isbn_no, $book_coverimage, $book_status, $book_summary, $book_copies);
                 $postStmt->execute();
                 //declare a varible which will be passed to alert function
                 if($postStmt)
