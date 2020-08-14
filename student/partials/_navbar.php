@@ -2,20 +2,25 @@
     //Load Navigation With Logged in User Session
     //$login_user_name = $_SESSION['login_user_name'];
     $login_id = $_SESSION['login_id'];
-    $ret = "SELECT * FROM  librarians  WHERE librarian_login_id = '$login_id'"; 
-    $stmt = $mysqli->prepare($ret) ;
-    $stmt->execute() ;
-    $res = $stmt->get_result();
-    while($lib = $res->fetch_object())
+    $ret="SELECT * FROM  students WHERE student_login_id = '$login_id' "; 
+    $stmt= $mysqli->prepare($ret) ;
+    $stmt->execute();
+    $res=$stmt->get_result();
+    while($std=$res->fetch_object())
     {
-        //default profile pic if logged in user has no profile picture
-        if($lib->librarian_profile_picture == '')
+        if($std->student_profile_picture == '' && $std->student_gender == 'Male')
         {
-            $profilePic = "<img src='../assets/img/boy.png' class='img-fluid' alt='Admin Dpic'>";
+            $profilePic = "<img src='../assets/img/boy.png' class=' img-fluid'  alt='avatar'>";
         }
+
+        else if($std->student_profile_picture == '' && $std->student_gender == 'Female')
+        {
+            $profilePic = "<img src='../assets/img/girl-2.png' class='img-fluid'  alt='avatar'>";
+        }
+
         else
         {
-            $profilePic = "<img src='../assets/img/librarian/$lib->librarian_profile_picture' class='img-fluid' alt='Admin Dpic'>";
+            $profilePic = "<img src='../assets/img/std/$std->student_profile_picture' class='img-fluid' alt='avatar'>";
         }
 ?>
     <div class="header-container fixed-top">
