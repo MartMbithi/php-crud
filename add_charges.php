@@ -66,8 +66,8 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                            //Get all Books
-                                            $ret="SELECT * FROM library_operations WHERE operation_status != 1 AND  operation_status != 2   "; 
+                                            //Get all uncharged library operations
+                                            $ret="SELECT * FROM library_operations WHERE operation_status != 1 AND  operation_status != 2 AND operation_charges = ''   "; 
                                             $stmt= $mysqli->prepare($ret) ;
                                             $stmt->execute();
                                             $res=$stmt->get_result();
