@@ -21,6 +21,29 @@
              $err = "Try Again Later";
          }
     }
+    //Revoke Student Login Permission
+    if(isset($_GET['revoke_login']))
+    {
+          $id= $_GET['revoke_login'];
+          $adn="DELETE FROM  login  WHERE  login_id = ?";
+          $postQuery="UPDATE students SET student_account_status= 'Denied Login' WHERE student_login_id =?";
+          $stmt= $mysqli->prepare($adn);
+          $postStmt = $mysqli->prepare($postQuery);
+          $stmt->bind_param('s', $id);
+          $postStmt->bind_param('s', $id);
+          $stmt->execute();
+          $postStmt->execute();
+          $stmt->close();	
+          $postStmt->close(); 
+         if($stmt && $postStmt)
+         {
+             $success = "Login Permissions Revoked" && header("refresh:1; url=manage_students.php");
+         }
+         else
+         {
+             $err = "Try Again Later";
+         }
+    }
     require_once('partials/_head.php');
     
 ?>
@@ -125,6 +148,28 @@
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuReference1">
                                                             <a class="dropdown-item" href="view_student.php?view=<?php echo $std->student_id;?>">View</a>
                                                             <a class="dropdown-item" href="update_student.php?update=<?php echo $std->student_id;?>">Update</a>
+                                                            <?php
+                                                                // Deny and Allow Login Permissions Based on Account Status
+                                                                if($std->student_account_status == 'Denied Login')
+                                                                {
+                                                                    echo 
+                                                                    "
+                                                                        <a class='dropdown-item text-success' href='student_login_permissions.php?user=$std->student_id'>
+                                                                            Give Login Permissions
+                                                                        </a>
+                                                                    ";
+                                                                }
+                                                                else
+                                                                {
+                                                                    echo 
+                                                                    "
+                                                                        <a class='dropdown-item text-danger' href='manage_students.php?revoke_login=$std->student_login_id'>
+                                                                            Revoke Login Permissions
+                                                                        </a>
+                                                                    ";
+                                                                }
+
+                                                            ?>
                                                             <div class="dropdown-divider"></div>
                                                             <a class="dropdown-item" href="manage_students.php?delete=<?php echo $std->student_id;?>">Delete</a>
                                                         </div>
