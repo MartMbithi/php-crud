@@ -3,23 +3,6 @@
     include('config/config.php');
     include('config/checklogin.php');
     check_login();
-    if(isset($_GET['delete']))
-    {
-          $id=intval($_GET['delete']);
-          $adn="DELETE FROM  library_operations  WHERE  operation_id = ?";
-          $stmt= $mysqli->prepare($adn);
-          $stmt->bind_param('i',$id);
-          $stmt->execute();
-          $stmt->close();	 
-         if($stmt)
-         {
-             $success = "Deleted" && header("refresh:1; url=manage_operations.php");
-         }
-         else
-         {
-             $err = "Try Again Later";
-         }
-    }
     require_once('partials/_head.php');
 ?>
 <body>
@@ -41,8 +24,8 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>
-                                <li class="breadcrumb-item"><a href="javascript:void(0);">Library Operations</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><span>Manage Operations</span></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Charges</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><span>Library Charges</span></li>
                             </ol>
                         </nav>
                     </div>
@@ -63,6 +46,7 @@
             require_once('partials/_sidebar.php');?>
         ?>
         <!--  END SIDEBAR  -->
+
         <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
             <div class="layout-px-spacing">
@@ -73,46 +57,34 @@
                                 <table id="html5-extension" class="table table-hover non-hover" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Number</th>
-                                            <th>Checksum</th>
-                                            <th>Type</th>
-                                            <th>Book Isbn Number</th>
                                             <th>Book Title</th>
                                             <th>Book Author</th>
-                                            <th>Created At</th>
+                                            <th>Book ISBN Number</th>
+                                            <th>Book Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                             //Get all Books
-                                            $ret="SELECT * FROM library_operations"; 
+                                            $ret="SELECT * FROM library_operations WHERE operation_status != 1 AND  operation_status != 2   "; 
                                             $stmt= $mysqli->prepare($ret) ;
                                             $stmt->execute();
                                             $res=$stmt->get_result();
-                                            while($ops=$res->fetch_object())
+                                            while($book=$res->fetch_object())
                                             {
                                         ?>
                                             <tr>
-                                                <td><?php echo $ops->operation_number;?></td>
-                                                <td><?php echo $ops->operation_checksum;?></td>
-                                                <td><?php echo $ops->operation_type;?></td>
-                                                <td><?php echo $ops->book_isbn_no;?></td>
-                                                <td><?php echo $ops->book_title;?></td>
-                                                <td><?php echo $ops->book_author;?></td>
-                                                <td><?php echo date('d-M-Y', strtotime($ops->created_at));?></td>
+                                                <td><?php echo $book->book_title;?></td>
+                                                <td><?php echo $book->book_author;?></td>
+                                                <td><?php echo $book->book_isbn_no;?></td>
+                                                <td><?php echo $book->operation_type;?></td>
                                                 <td>
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn btn-dark btn-sm">Manage</button>
-                                                        <button type="button" class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuReference1">
-                                                            <a class="dropdown-item" href="view_operation.php?view=<?php echo $ops->operation_id;?>">View</a>
-                                                            <div class="dropdown-divider"></div>
-                                                            <a class="dropdown-item" href="manage_operations.php?delete=<?php echo $ops->operation_id;?>">Delete</a>
-                                                        </div>
-                                                    </div>
+                                                    <a href="add_charges_per_book.php?id=<?php echo $book->operation_id;?>" class="badge outline-badge-success text-success bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add Charge For <?php echo $book->operation_type;?> Book">
+                                                        Add Charge
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="20 6 9 17 4 12"></polyline></svg> 
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>                                                   
+                                                    </a>
                                                 </td>
                                             </tr>
                                         <?php }?>

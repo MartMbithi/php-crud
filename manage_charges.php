@@ -6,21 +6,23 @@
     if(isset($_GET['delete']))
     {
           $id=intval($_GET['delete']);
-          $adn="DELETE FROM  library_operations  WHERE  operation_id = ?";
+          $adn="DELETE FROM  charges  WHERE  charge_id = ?";
           $stmt= $mysqli->prepare($adn);
           $stmt->bind_param('i',$id);
           $stmt->execute();
           $stmt->close();	 
          if($stmt)
          {
-             $success = "Deleted" && header("refresh:1; url=manage_operations.php");
+             $success = "Deleted" && header("refresh:1; url=manage_charges.php");
          }
          else
          {
              $err = "Try Again Later";
          }
     }
+
     require_once('partials/_head.php');
+    
 ?>
 <body>
     
@@ -41,8 +43,8 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>
-                                <li class="breadcrumb-item"><a href="javascript:void(0);">Library Operations</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><span>Manage Operations</span></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Charges</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><span>Manage Charges</span></li>
                             </ol>
                         </nav>
                     </div>
@@ -63,6 +65,7 @@
             require_once('partials/_sidebar.php');?>
         ?>
         <!--  END SIDEBAR  -->
+
         <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
             <div class="layout-px-spacing">
@@ -73,34 +76,25 @@
                                 <table id="html5-extension" class="table table-hover non-hover" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Number</th>
-                                            <th>Checksum</th>
-                                            <th>Type</th>
-                                            <th>Book Isbn Number</th>
-                                            <th>Book Title</th>
-                                            <th>Book Author</th>
-                                            <th>Created At</th>
+                                            <th>Charge Name</th>
+                                            <th>Charge Amount</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                            //Get all Books
-                                            $ret="SELECT * FROM library_operations"; 
+                                            //Get all librarians
+                                            $ret="SELECT * FROM charges  "; 
                                             $stmt= $mysqli->prepare($ret) ;
                                             $stmt->execute();
                                             $res=$stmt->get_result();
-                                            while($ops=$res->fetch_object())
+                                            while($c=$res->fetch_object())
                                             {
+
                                         ?>
                                             <tr>
-                                                <td><?php echo $ops->operation_number;?></td>
-                                                <td><?php echo $ops->operation_checksum;?></td>
-                                                <td><?php echo $ops->operation_type;?></td>
-                                                <td><?php echo $ops->book_isbn_no;?></td>
-                                                <td><?php echo $ops->book_title;?></td>
-                                                <td><?php echo $ops->book_author;?></td>
-                                                <td><?php echo date('d-M-Y', strtotime($ops->created_at));?></td>
+                                                <td><?php echo $c->charge_name;?></td>
+                                                <td>Ksh <?php echo $c->charge_amount;?></td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-dark btn-sm">Manage</button>
@@ -108,9 +102,9 @@
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
                                                         </button>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuReference1">
-                                                            <a class="dropdown-item" href="view_operation.php?view=<?php echo $ops->operation_id;?>">View</a>
+                                                            <a class="dropdown-item" href="update_charges.php?update=<?php echo $c->charge_id;?>">Update</a>
                                                             <div class="dropdown-divider"></div>
-                                                            <a class="dropdown-item" href="manage_operations.php?delete=<?php echo $ops->operation_id;?>">Delete</a>
+                                                            <a class="dropdown-item" href="manage_charges.php?delete=<?php echo $c->charge_id;?>">Delete</a>
                                                         </div>
                                                     </div>
                                                 </td>
