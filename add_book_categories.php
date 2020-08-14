@@ -3,73 +3,31 @@
     include('config/config.php');
     include('config/checklogin.php');
     check_login();
-     if(isset($_POST['add_librarian']))
+     if(isset($_POST['Book_Categories']))
     {
-            $error = 0;
-            if (isset($_POST['librarian_name']) && !empty($_POST['librarian_name'])) {
-                $librarian_name=mysqli_real_escape_string($mysqli,trim($_POST['librarian_name']));
-            }else{
-                $error = 1;
-                $err="Name Cannot Be Empty";
-            }
-            if (isset($_POST['librarian_number']) && !empty($_POST['librarian_number'])) {
-                $librarian_number=mysqli_real_escape_string($mysqli,trim($_POST['librarian_number']));
-            }else{
-                $error = 1;
-                $err="Librarian Number Cannot Be empty";
-            }
-            if (isset($_POST['librarian_email']) && !empty($_POST['librarian_email'])) {
-                $librarian_email =mysqli_real_escape_string($mysqli,trim($_POST['librarian_email']));
-            }else{
-                $error = 1;
-                $err="Librarian Email Cannot Be Empty";
-            }
-            if (isset($_POST['librarian_phone_number']) && !empty($_POST['librarian_phone_number'])) {
-                $librarian_phone_number=mysqli_real_escape_string($mysqli,trim($_POST['librarian_phone_number']));
-            }else{
-                $error = 1;
-                $err="Phone Number Cannot Be Empty";
-            }
-                        
-            if(!$error)
+        if(isset($_POST['add_category']))
+        {
+            //Prevent Posting Blank Values
+            if ( empty($_POST["category_code"]) || empty($_POST["category_name"]) || empty($_POST['category_description']) ) 
             {
-                //Check if email or staff number already exists
-                $sql="SELECT * FROM  librarians WHERE  librarian_number='$librarian_number' || librarian_email='$librarian_email' ";
-                $res=mysqli_query($mysqli,$sql);
-                if (mysqli_num_rows($res) > 0) {
-                $row = mysqli_fetch_assoc($res);
-                if ($librarian_number == $row['librarian_number'])
-                {
-                    $err =  "Librarian With That  Number Exists";
-                }
-                else
-                {
-                    $err =  "Email Address Already Taken";
-                }
+                $err="Blank Values Not Accepted";
             }
             else
-            {
-                $librarian_name = $_POST['librarian_name'];
-                $librarian_number = $_POST['librarian_number'];
-                $librarian_email = $_POST['librarian_email'];
-                $librarian_phone_number = $_POST['librarian_phone_number'];
-                $librarian_address = $_POST['librarian_address'];
-                $librarian_profile_picture = $_FILES["librarian_profile_picture"]["name"];
-                move_uploaded_file($_FILES["librarian_profile_picture"]["tmp_name"],"assets/img/librarian/".$_FILES["librarian_profile_picture"]["name"]);
-                $librarian_account_status = $_POST['librarian_account_status'];
-                $librarian_login_id = $_POST['librarian_login_id'];     
-                $librarian_bio = $_POST['librarian_bio'];          
-
+            {  
+                $category_code = $_POST['category_code'];
+                $category_name = $_POST['category_name'];
+                $category_description = $_POST['category_description'];
+                     
                 //Insert Captured information to a database table
-                $postQuery="INSERT INTO librarians (librarian_bio, librarian_name, librarian_number, librarian_email, librarian_phone_number, librarian_address, librarian_profile_picture, librarian_account_status, librarian_login_id) VALUES (?,?,?,?,?,?,?,?,?)";
+                $postQuery="INSERT INTO book_categories (category_code, category_name, category_description) VALUES(?,?,?)";
                 $postStmt = $mysqli->prepare($postQuery);
                 //bind paramaters
-                $rc=$postStmt->bind_param('sssssssss', $librarian_bio, $librarian_name, $librarian_number, $librarian_email, $librarian_phone_number, $librarian_address, $librarian_profile_picture, $librarian_account_status, $librarian_login_id);
+                $rc=$postStmt->bind_param('sss', $category_code, $category_name, $category_description);
                 $postStmt->execute();
                 //declare a varible which will be passed to alert function
                 if($postStmt)
                 {
-                    $success = "Librarian Added Added" && header("refresh:1; url=add_librarian.php");
+                    $success = "Category Added" && header("refresh:1; url=add_book_categories.php");
                 }
                 else 
                 {
@@ -104,8 +62,8 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>
-                                <li class="breadcrumb-item"><a href="javascript:void(0);">Librarians</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><span>Add Librarian</span></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Book Categories</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><span>Add Category</span></li>
                             </ol>
                         </nav>
                     </div>
@@ -144,52 +102,21 @@
                                     <form method="POST" enctype="multipart/form-data">
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Full Name</label>
-                                                <input type="text" name="librarian_name" class="form-control">
+                                                <label for="inputEmail4">Category Name</label>
+                                                <input type="text" name="category_name" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputPassword4">Librarian Number</label>
-                                                <input type="text" name="librarian_number" value="LMS-<?php echo $alpha;?>-<?php echo $beta;?>" class="form-control">
+                                                <label for="inputPassword4">Category Code</label>
+                                                <input type="text" name="category_code" value="LMS-<?php echo $alpha;?>-<?php echo $beta;?>" class="form-control">
                                             </div>
-                                        </div>
-                                        <div class="form-row mb-4">
-                                            <div class="form-group col-md-6">
-                                                <label for="inputAddress">Email Address</label>
-                                                <input type="email" name="librarian_email"  class="form-control">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="inputAddress2">Phone Number</label>
-                                                <input type="text" name="librarian_phone_number" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-row mb-4">
-                                            <div class="form-group col-md-6">
-                                                <label for="inputCity">Address</label>
-                                                <input type="text" name="librarian_address" class="form-control" id="inputCity">
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label for="inputState">Profile Picture</label>
-                                                <input type="file" name="librarian_profile_picture" class="form-control btn btn-outline-success">                                                
-                                            </div>
-                                            <div class="form-group col-md-2">
-                                                <label for="inputZip">Account Status</label>
-                                                <select name="librarian_account_status" class="form-control" >
-                                                    <option>Can Login</option>
-                                                    <option>Denied Login</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-6" style="display:none">
-                                                <label for="inputCity">Login Id</label>
-                                                <input type="text" name="librarian_login_id" class="form-control" value="<?php echo sha1(md5($beta));?>">
-                                            </div>                                            
                                         </div>
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-12">
-                                                <label for="inputAddress">Bio | About | Description</label>
-                                                <textarea  name="librarian_bio" rows="5" class="form-control"></textarea>
+                                                <label for="inputAddress">Category Description</label>
+                                                <textarea  name="category_description" rows="10" class="form-control"></textarea>
                                             </div>
                                         </div>
-                                      <button type="submit" name="add_librarian" class="btn btn-primary mt-3">Add Librarian</button>
+                                      <button type="submit" name="Book_Category" class="btn btn-primary mt-3">Add Category</button>
                                     </form>
                                 </div>
                             </div>
