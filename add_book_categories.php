@@ -3,9 +3,8 @@
     include('config/config.php');
     include('config/checklogin.php');
     check_login();
-     if(isset($_POST['Book_Categories']))
-    {
-        if(isset($_POST['add_category']))
+    
+        if(isset($_POST['Book_Category']))
         {
             //Prevent Posting Blank Values
             if ( empty($_POST["category_code"]) || empty($_POST["category_name"]) || empty($_POST['category_description']) ) 
@@ -36,7 +35,7 @@
             }
         }    
             
-    }
+    
     require_once('partials/_head.php');
     require_once('config/code-generator.php');
 ?>
