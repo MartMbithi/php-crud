@@ -17,14 +17,23 @@
             $student_operation_start_date = $_POST['student_operation_start_date'];
             $student_operation_end_date = $_POST['student_operation_end_date'];
                     
+            //Book Copies
+            $book_copies = $_POST['book_copies'];
+
             //Insert Captured information to a database table
             $postQuery="INSERT INTO library_operations (operation_number, operation_checksum, operation_type, operation_desc) VALUES(?,?,?,?)";
             $foregnQry = "INSERT INTO student_operations(student_operation_student_id, student_operation_book_id, student_operation_start_date, student_operation_end_date) VALUES(?,?,?,?)";
+            $bookQry = "UPDATE books SET book_copies ? WHERE book_id = ?";
+
+            //Prepare 
             $postStmt = $mysqli->prepare($postQuery);
             $foregnStmt = $mysqli->prepare($foregnQry);
+            $bookStmt = $mysqli->prepare($bookQry);
+
             //bind paramaters
             $rc=$postStmt->bind_param('ssss', $operation_number, $operation_checksum, $operation_type, $operation_desc);
             $rc = $foregnStmt->bind_param('iiss', $student_operation_student_id, $book, $student_operation_start_date, $student_operation_end_date);
+            $rc = $bookStmt->bind_param('si', $book_copies, $book);
             $postStmt->execute();
             $foregnStmt->execute();
             //declare a varible which will be passed to alert function
@@ -60,6 +69,8 @@
         $res=$stmt->get_result();
         while($book=$res->fetch_object())
         {
+            $initialBookCount = $book->book_copies;
+            $newBookCount = $initialBookCount - 1 ;
     ?>
     <!--  END NAVBAR  -->
 
@@ -136,6 +147,10 @@
                                                 <label for="inputPassword4">Book ISBN Number</label>
                                                 <input type="text" name="" value="<?php echo $book->book_isbn_no;?>" readonly class="form-control">
                                             </div>
+                                            <div class="form-group col-md-6" style="display:none">
+                                                <label>Remaining Book Copies</label>
+                                                <input type="text" value="<?php echo $newBookCount;?>" required name="book_copies" class="md-input"  />
+                                            </div>
                                         </div>
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-6">
@@ -159,7 +174,7 @@
                                                 <label for="inputPassword4">Student Name</label>
                                                 <input type="text" name="" id ="studentName" readonly class="form-control">
                                             </div>
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-6" style="display:none;">
                                                 <label for="inputPassword4">Student ID</label>
                                                 <input type="text" name="student_operation_student_id" id="StudentID" readonly class="form-control">
                                             </div>
