@@ -42,7 +42,7 @@
                 //declare a varible which will be passed to alert function
                 if($postStmt && $frStmt && $upStmt)
                 {
-                    $success = "Charge Added" && header("refresh:1; url=manage_charges.php");
+                    $success = "Charge Added" && header("refresh:1; url=add_charges.php");
                 }
                 else 
                 {

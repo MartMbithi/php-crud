@@ -43,7 +43,7 @@
 
         <!--  BEGIN SIDEBAR  -->
         <?php 
-            require_once('partials/_sidebar.php');?>
+            require_once('partials/_sidebar.php');
         ?>
         <!--  END SIDEBAR  -->
 
@@ -67,7 +67,7 @@
                                     <tbody>
                                         <?php
                                             //Get all uncharged library operations
-                                            $ret="SELECT * FROM library_operations WHERE operation_status != 1 AND  operation_status != 2 AND operation_charges = ''   "; 
+                                            $ret="SELECT * FROM library_operations WHERE operation_status != 1 AND  operation_status != 2 AND operation_charge = ''   "; 
                                             $stmt= $mysqli->prepare($ret) ;
                                             $stmt->execute();
                                             $res=$stmt->get_result();
