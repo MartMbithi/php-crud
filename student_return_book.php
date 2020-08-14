@@ -4,7 +4,7 @@
     include('config/checklogin.php');
     check_login();
     
-        if(isset($_POST['BorrowBook']))
+        if(isset($_POST['returnBook']))
         {
             $operation_number = $_POST['operation_number'];
             $operation_checksum  = $_POST['operation_checksum'];
@@ -17,17 +17,18 @@
 
             //Handle Foregn Keys
             $student_operation_student_id = $_POST['student_operation_student_id'];
-            $book = $_GET['book'];
+            $student_operation_book_id = $_POST['student_operation_book_id'];
             $student_operation_start_date = $_POST['student_operation_start_date'];
             $student_operation_end_date = $_POST['student_operation_end_date'];
                     
             //Book Copies
             $book_copies = $_POST['book_copies'];
+            $book = $_GET['book'];
 
             //Insert Captured information to a database table
             $postQuery="INSERT INTO library_operations (operation_id, book_title, book_isbn_no, book_author, operation_number, operation_checksum, operation_type, operation_desc) VALUES(?,?,?,?,?,?,?,?)";
             $foregnQry = "INSERT INTO student_operations(student_operation_student_id, student_operation_book_id, student_operation_start_date, student_operation_end_date, Student_operation_operation_id) VALUES(?,?,?,?,?)";
-            $bookQry = "UPDATE books SET book_copies =? WHERE book_id = ?";
+            $bookQry = "UPDATE books SET book_copies =? WHERE book_isbn_no = ?";
 
             //Prepare 
             $postStmt = $mysqli->prepare($postQuery);
@@ -36,15 +37,15 @@
 
             //bind paramaters
             $rc=$postStmt->bind_param('ssssssss', $operation_id, $book_title, $book_isbn_no, $book_author,$operation_number, $operation_checksum, $operation_type, $operation_desc);
-            $rc = $foregnStmt->bind_param('iisss', $student_operation_student_id, $book, $student_operation_start_date, $student_operation_end_date, $operation_id);
-            $rc = $bookStmt->bind_param('si', $book_copies, $book);
+            $rc = $foregnStmt->bind_param('iisss', $student_operation_student_id, $student_operation_book_id, $student_operation_start_date, $student_operation_end_date, $operation_id);
+            $rc = $bookStmt->bind_param('ss', $book_copies, $book);
             $postStmt->execute();
             $foregnStmt->execute();
             $bookStmt->execute();
             //declare a varible which will be passed to alert function
             if($postStmt && $foregnStmt && $bookStmt)
             {
-                $success = "Book Borrowed" && header("refresh:1; url=borrow_book.php");
+                $success = "Book Returned" && header("refresh:1; url=return_book.php");
             }
             else 
             {
@@ -68,14 +69,14 @@
     <?php 
         require_once('partials/_navbar.php');
         $book = $_GET['book'];
-        $ret="SELECT * FROM books WHERE book_id = '$book' "; 
+        $ret="SELECT * FROM books WHERE book_isbn_no = '$book' "; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->execute();
         $res=$stmt->get_result();
         while($book=$res->fetch_object())
         {
             $initialBookCount = $book->book_copies;
-            $newBookCount = $initialBookCount - 1 ;
+            $newBookCount = $initialBookCount + 1 ;
     ?>
     <!--  END NAVBAR  -->
 
@@ -91,7 +92,7 @@
                                 <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Library Operations</a></li>
-                                <li class="breadcrumb-item"><a href="javascript:void(0);">Borrow Book</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Return Book</a></li>
                                 <li class="breadcrumb-item active" aria-current="page"><span><?php echo $book->book_title;?></span></li>
                             </ol>
                         </nav>
@@ -140,7 +141,7 @@
                                             </div>
                                             <div class="form-group col-md-6" style="display:none">
                                                 <label for="inputPassword4">Library Category</label>
-                                                <input type="text" name="operation_type" value="Borrow" readonly class="form-control">
+                                                <input type="text" name="operation_type" value="Return" readonly class="form-control">
                                             </div>
                                             <div class="form-group col-md-6" style="display:none">
                                                 <label for="inputPassword4">Operation ID</label>
@@ -160,6 +161,10 @@
                                                 <label for="inputPassword4">Book Author</label>
                                                 <input type="text" name="book_author" value="<?php echo $book->book_author;?>" readonly class="form-control">
                                             </div>
+                                            <div class="form-group col-md-4" style="display:none">
+                                                <label for="inputPassword4">Book ID</label>
+                                                <input type="text" name="student_operation_book_id" value="<?php echo $book->book_id;?>" readonly class="form-control">
+                                            </div>
                                             <div class="form-group col-md-6" style="display:none">
                                                 <label>Remaining Book Copies</label>
                                                 <input type="text" value="<?php echo $newBookCount;?>" required name="book_copies" class="md-input"  />
@@ -168,38 +173,53 @@
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4">Registration Number</label>
-                                                <select name="" id ="regNumber" onChange="getStudentDetails(this.value)" class="form-control  basic">
-                                                    <option selected="selected">Select Reg Number</option>
-                                                    <?php
-                                                        $ret="SELECT * FROM  students"; 
-                                                        $stmt= $mysqli->prepare($ret) ;
-                                                        $stmt->execute();
-                                                        $res=$stmt->get_result();
-                                                        while($std=$res->fetch_object())
-                                                        {
-                                                        
-                                                    ?>
-                                                        <option><?php echo $std->student_reg_number;?></option>
-                                                    <?php }?>
-                                                </select>
+                                                <?php
+                                                    $id = $_GET['id'];
+                                                    $ret="SELECT * FROM  student_operations WHERE Student_operation_operation_id = '$id'"; 
+                                                    $stmt= $mysqli->prepare($ret) ;
+                                                    $stmt->execute();
+                                                    $res=$stmt->get_result();
+                                                    while($std=$res->fetch_object())
+                                                    {
+                                                        $student_id = $std->student_operation_student_id;
+                                                    }
+                                                    $ret="SELECT * FROM  students WHERE student_id = '$student_id'"; 
+                                                    $stmt= $mysqli->prepare($ret) ;
+                                                    $stmt->execute();
+                                                    $res=$stmt->get_result();
+                                                    while($std=$res->fetch_object())
+                                                    {
+
+                                                ?>
+                                                    <input type="text" name="student_reg_number" readonly value="<?php echo $std->student_reg_number;?>" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputPassword4">Student Name</label>
-                                                <input type="text" name="" id ="studentName" readonly class="form-control">
+                                                <input type="text" name="student_name" value="<?php echo $std->student_name;?>" readonly class="form-control">
                                             </div>
                                             <div class="form-group col-md-6" style="display:none;">
                                                 <label for="inputPassword4">Student ID</label>
-                                                <input type="text" name="student_operation_student_id" id="StudentID" readonly class="form-control">
+                                                <input type="text" name="student_operation_student_id" value="<?php echo $student_id;?>" readonly class="form-control">
                                             </div>
+                                            <?php }
+                                            
+                                                $id = $_GET['id'];
+                                                $ret="SELECT * FROM  student_operations WHERE Student_operation_operation_id = '$id'"; 
+                                                $stmt= $mysqli->prepare($ret) ;
+                                                $stmt->execute();
+                                                $res=$stmt->get_result();
+                                                while($std=$res->fetch_object())
+                                                {
+                                            ?>
                                         </div>
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4">Date Borrowed</label>
-                                                <input type="text" value="<?php echo date('m-d-Y');?>" name="student_operation_start_date"   class="form-control">
+                                                <input type="text" value="<?php echo $std->student_operation_start_date;?>" name="student_operation_start_date"   class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputPassword4">Return Date</label>
-                                                <input type="date" required name="student_operation_end_date"   class="form-control">
+                                                <input type="text" value="<?php echo $std->student_operation_end_date;?>" required name="student_operation_end_date"   class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-row mb-4">
@@ -208,7 +228,7 @@
                                                 <textarea  name="operation_desc"  rows="10" class="form-control"></textarea>
                                             </div>
                                         </div>
-                                      <button type="submit" name="BorrowBook" class="btn btn-primary mt-3">Borrow Book</button>
+                                      <button type="submit" name="returnBook" class="btn btn-primary mt-3">Return Book</button>
                                     </form>
                                 </div>
                             </div>
@@ -222,7 +242,7 @@
         </div>
         <!--  END CONTENT PART  -->
     </div>
-    <?php require_once('partials/_scripts.php'); }?>   
+    <?php require_once('partials/_scripts.php');}} ?>   
 </body>
 
 </html>

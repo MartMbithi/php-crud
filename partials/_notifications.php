@@ -1,5 +1,5 @@
 <?php
-    $ret = "SELECT * FROM  library_operations "; 
+    $ret = "SELECT * FROM  library_operations ORDER BY `library_operations`.`created_at` DESC"; 
     $stmt = $mysqli->prepare($ret) ;
     $stmt->execute() ;
     $res = $stmt->get_result();
