@@ -22,6 +22,9 @@
     <link rel="stylesheet" type="text/css" href="plugins/table/datatable/datatables.css">
     <link rel="stylesheet" type="text/css" href="plugins/table/datatable/custom_dt_html5.css">
     <link rel="stylesheet" type="text/css" href="plugins/table/datatable/dt-global_style.css">
+    <link href="plugins/flatpickr/flatpickr.css" rel="stylesheet" type="text/css">
+    <link href="plugins/flatpickr/custom-flatpickr.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="plugins/select2/select2.min.css">
     <script src="assets/js/swal.js"></script>
     <!--Load Swal-->
     <?php if(isset($success)) {?>
