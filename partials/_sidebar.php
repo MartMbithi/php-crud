@@ -93,10 +93,10 @@
                 </a>
                 <ul class="collapse submenu list-unstyled" id="books" data-parent="#accordionExample">
                     <li>
-                        <a href="element_alerts.html"> Add </a>
+                        <a href="add_books.php"> Add </a>
                     </li>
                     <li>
-                        <a href="element_avatar.html"> Manage Books </a>
+                        <a href="manage_books.php"> Manage Books </a>
                     </li>
                 </ul>
             </li>
