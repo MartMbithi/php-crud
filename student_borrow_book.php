@@ -4,7 +4,7 @@
     include('config/checklogin.php');
     check_login();
     
-        if(isset($_POST['borrow_Book']))
+        if(isset($_POST['BorrowBook']))
         {
             $operation_number = $_POST['operation_number'];
             $operation_checksum  = $_POST['operation_checksum'];
@@ -23,7 +23,7 @@
             //Insert Captured information to a database table
             $postQuery="INSERT INTO library_operations (operation_number, operation_checksum, operation_type, operation_desc) VALUES(?,?,?,?)";
             $foregnQry = "INSERT INTO student_operations(student_operation_student_id, student_operation_book_id, student_operation_start_date, student_operation_end_date) VALUES(?,?,?,?)";
-            $bookQry = "UPDATE books SET book_copies ? WHERE book_id = ?";
+            $bookQry = "UPDATE books SET book_copies =? WHERE book_id = ?";
 
             //Prepare 
             $postStmt = $mysqli->prepare($postQuery);
@@ -36,8 +36,9 @@
             $rc = $bookStmt->bind_param('si', $book_copies, $book);
             $postStmt->execute();
             $foregnStmt->execute();
+            $bookStmt->execute();
             //declare a varible which will be passed to alert function
-            if($postStmt)
+            if($postStmt && $foregnStmt && $bookStmt)
             {
                 $success = "Book Borrowed" && header("refresh:1; url=borrow_book.php");
             }
@@ -127,7 +128,7 @@
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4">Library Operation Number</label>
-                                                <input type="text" name="operation_number" value="LMS-<?php echo $alpha;?>-<?php echo $beta;?>" class="form-control">
+                                                <input type="text" name="operation_number" required value="LMS-<?php echo $alpha;?>-<?php echo $beta;?>" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputPassword4">Library Operation Checksum</label>
@@ -186,13 +187,13 @@
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputPassword4">Return Date</label>
-                                                <input type="date" name="student_operation_end_date"   class="form-control">
+                                                <input type="date" required name="student_operation_end_date"   class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-12">
                                                 <label for="inputAddress">Description</label>
-                                                <textarea  name="operation_desc" rows="10" class="form-control"></textarea>
+                                                <textarea  name="operation_desc"  rows="10" class="form-control"></textarea>
                                             </div>
                                         </div>
                                       <button type="submit" name="BorrowBook" class="btn btn-primary mt-3">Borrow Book</button>

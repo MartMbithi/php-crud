@@ -20,7 +20,6 @@
                             <h5>Borrow Book</h5>
                             <span class=''>$date</span>
                         </div>
-                        <p>$row->operation_desc</p>
                     </div>
                 </div>
             ";
@@ -38,7 +37,6 @@
                             <h5>Return Book</h5>
                             <span class=''>$date</span>
                         </div>
-                        <p>$row->operation_desc</p>
                     </div>
                 </div>
             ";
@@ -56,7 +54,6 @@
                             <h5>Lost Book</h5>
                             <span class=''>$date</span>
                         </div>
-                        <p>$row->operation_desc</p>
                     </div>
                 </div>
             ";
@@ -74,7 +71,6 @@
                         <h5>Damanaged Book</h5>
                         <span class=''>$date</span>
                     </div>
-                    <p>$row->operation_desc</p>
                 </div>
             </div>
             ";
@@ -93,7 +89,6 @@
                         <h5>Other</h5>
                         <span class=''>$date</span>
                     </div>
-                    <p>$row->operation_desc</p>
                 </div>
             </div>
             ";
