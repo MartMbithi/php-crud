@@ -81,7 +81,7 @@
                                             <th>Email</th>
                                             <th>Phone</th>
                                             <th>Address</th>
-                                            <th>Account Status</th>
+                                            <th>Account Login Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -123,6 +123,7 @@
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuReference1">
                                                             <a class="dropdown-item" href="view_librarian.php?view=<?php echo $lib->librarian_id;?>">View</a>
                                                             <a class="dropdown-item" href="update_librarian.php?update=<?php echo $lib->librarian_id;?>">Update</a>
+                                                            <a class="dropdown-item" href="login_permissions.php?user=<?php echo $lib->librarian_id;?>">Login Permissions</a>
                                                             <div class="dropdown-divider"></div>
                                                             <a class="dropdown-item" href="manage_librarians.php?delete=<?php echo $lib->librarian_id;?>">Delete</a>
                                                         </div>
