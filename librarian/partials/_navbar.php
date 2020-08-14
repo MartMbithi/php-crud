@@ -15,7 +15,7 @@
         }
         else
         {
-            $profilePic = "<img src='../assets/img/$lib->librarian_profile_picture' class='img-fluid' alt='Admin Dpic'>";
+            $profilePic = "<img src='../assets/img/librarian/$lib->librarian_profile_picture' class='img-fluid' alt='Admin Dpic'>";
         }
 ?>
     <div class="header-container fixed-top">
