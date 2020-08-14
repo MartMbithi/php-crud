@@ -140,7 +140,7 @@
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4">Registration Number</label>
-                                                <select name="b_isbn" id ="bookISBN" onChange="getStudentDetails(this.value)" class="form-control  basic">
+                                                <select name="" id ="regNumber" onChange="getStudentDetails(this.value)" class="form-control  basic">
                                                     <option selected="selected">Select Reg Number</option>
                                                     <?php
                                                         $ret="SELECT * FROM  students"; 
