@@ -26,10 +26,10 @@
     {
           $id= $_GET['revoke_login'];
           $adn="DELETE FROM  login  WHERE  login_id = ?";
-          $postQuery="UPDATE librarians SET librarian_account_status=? WHERE librarian_login_id =?";
+          $postQuery="UPDATE librarians SET librarian_account_status= 'Denied Login' WHERE librarian_login_id =?";
           $stmt= $mysqli->prepare($adn);
           $postStmt = $mysqli->prepare($postQuery);
-          $stmt->bind_param('s',$id);
+          $stmt->bind_param('s', $id);
           $postStmt->bind_param('s', $id);
           $stmt->execute();
           $postStmt->execute();
@@ -153,7 +153,7 @@
                                                                 {
                                                                     echo 
                                                                     "
-                                                                        <a class='dropdown-item' href='login_permissions.php?user=$lib->librarian_id'>
+                                                                        <a class='dropdown-item text-success' href='login_permissions.php?user=$lib->librarian_id'>
                                                                             Give Login Permissions
                                                                         </a>
                                                                     ";
@@ -162,7 +162,7 @@
                                                                 {
                                                                     echo 
                                                                     "
-                                                                        <a class='dropdown-item text-danger' href='manage_librarians.php?revoke_login$lib->librarian_login_id'>
+                                                                        <a class='dropdown-item text-danger' href='manage_librarians.php?revoke_login=$lib->librarian_login_id'>
                                                                             Revoke Login Permissions
                                                                         </a>
                                                                     ";

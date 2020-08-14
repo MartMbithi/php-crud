@@ -122,9 +122,9 @@
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-6">
                                                 <label for="inputAddress">Login ID </label>
-                                                <input type="text" name="login_id" value="<?php echo $lib->librarian_login_id;?>" class="form-control">
+                                                <input type="text" readonly name="login_id" value="<?php echo $lib->librarian_login_id;?>" class="form-control">
                                             </div>
-                                            <div class="form-group col-md-6" style="display:hidden">
+                                            <div class="form-group col-md-6" style="display:none">
                                                 <label for="inputAddress">Account Status </label>
                                                 <input type="text" name="librarian_account_status" value="Can Login" class="form-control">
                                             </div>
