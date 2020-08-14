@@ -15,6 +15,8 @@
             $student_operation_book_id = $_POST['student_operation_book_id'];
             $student_operation_start_date = $_POST['student_operation_start_date'];
             $student_operation_end_date = $_POST['student_operation_end_date'];
+            $student_operation_librarian_id =$_POST['student_operation_librarian_id'];
+
                     
             //Book Copies
             $book_copies = $_POST['book_copies'];
@@ -22,7 +24,7 @@
 
             //Insert Captured information to a database table
             $postQuery="UPDATE library_operations SET operation_status =?, operation_type=? WHERE operation_id =?";
-            $foregnQry = "INSERT student_operations(student_operation_student_id, student_operation_book_id, student_operation_start_date, student_operation_end_date, Student_operation_operation_id) VALUES(?,?,?,?,?)";
+            $foregnQry = "INSERT student_operations (student_operation_librarian_id, student_operation_student_id, student_operation_book_id, student_operation_start_date, student_operation_end_date, Student_operation_operation_id) VALUES(?,?,?,?,?,?)";
             $bookQry = "UPDATE books SET book_copies =? WHERE book_isbn_no = ?";
 
             //Prepare 
@@ -32,7 +34,7 @@
 
             //bind paramaters
             $rc=$postStmt->bind_param('iss', $operation_status, $operation_type,$id);
-            $rc = $foregnStmt->bind_param('iisss', $student_operation_student_id, $student_operation_book_id, $student_operation_start_date, $student_operation_end_date, $id);
+            $rc = $foregnStmt->bind_param('iiisss', $student_operation_librarian_id, $student_operation_student_id, $student_operation_book_id, $student_operation_start_date, $student_operation_end_date, $id);
             $rc = $bookStmt->bind_param('ss', $book_copies, $book);
             $postStmt->execute();
             $foregnStmt->execute();
@@ -218,6 +220,19 @@
                                                 <input type="text" value="<?php echo $std->student_operation_end_date;?>" required name="student_operation_end_date"   class="form-control">
                                             </div>
                                         </div>
+                                        <?php
+                                            //Get Logged in librarian ID
+                                            $login_id = $_SESSION['login_id'];
+                                            $ret = "SELECT * FROM  librarians  WHERE librarian_login_id = '$login_id'"; 
+                                            $stmt = $mysqli->prepare($ret) ;
+                                            $stmt->execute() ;
+                                            $res = $stmt->get_result();
+                                            while($lib = $res->fetch_object())
+                                            {
+
+                                        ?>
+                                            <input type="hidden" name="student_operation_librarian_id" value="<?php echo $lib->librarian_id;?>"  class="form-control">
+
                                       <button type="submit" name="returnBook" class="btn btn-primary mt-3">Return Book</button>
                                     </form>
                                 </div>
@@ -232,7 +247,7 @@
         </div>
         <!--  END CONTENT PART  -->
     </div>
-    <?php require_once('partials/_scripts.php');}} ?>   
+    <?php require_once('partials/_scripts.php');}}} ?>   
 </body>
 
 </html>
