@@ -84,7 +84,7 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                            //Get all librarians
+                                            //Get all book categories
                                             $ret="SELECT * FROM book_categories  "; 
                                             $stmt= $mysqli->prepare($ret) ;
                                             $stmt->execute();

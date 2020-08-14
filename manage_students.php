@@ -111,7 +111,7 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                            //Get all librarians
+                                            //Get all Students
                                             $ret="SELECT * FROM  students"; 
                                             $stmt= $mysqli->prepare($ret) ;
                                             $stmt->execute();

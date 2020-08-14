@@ -162,23 +162,23 @@
                 </a>
                 <ul class="collapse submenu list-unstyled" id="reports" data-parent="#accordionExample">
                     <li>
-                        <a href="add_charges.php">Librarians </a>
+                        <a href="librarians.php">Librarians </a>
                     </li>
                     <li>
-                        <a href="manage_charges.php">Students </a>
+                        <a href="students.php">Students </a>
                     </li>
                     <li>
-                        <a href="manage_charges.php">Book Categories </a>
+                        <a href="book_categories.php">Book Categories </a>
                     </li>
                     <li>
-                        <a href="manage_charges.php">Books </a>
+                        <a href="books.php">Books </a>
                     </li>
                     <li>
-                        <a href="manage_charges.php">Library Operations </a>
+                        <a href="library_operations.php">Library Operations </a>
                     </li>
                     <li>
-                        <a href="manage_charges.php">Finances</a>
-                    </li>
+                        <a href="fines.php">Fines</a>
+                    </li> 
                 </ul>
             </li>
 

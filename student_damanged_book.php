@@ -32,7 +32,7 @@
 
             //bind paramaters
             $rc=$postStmt->bind_param('iss', $operation_status, $operation_type,$id);
-            $rc = $foregnStmt->bind_param('iisss', $student_operation_student_id, $student_operation_book_id, $student_operation_start_date, $student_operation_end_date, $operation_id);
+            $rc = $foregnStmt->bind_param('iisss', $student_operation_student_id, $student_operation_book_id, $student_operation_start_date, $student_operation_end_date, $id);
             $rc = $bookStmt->bind_param('ss', $book_copies, $book);
             $postStmt->execute();
             $foregnStmt->execute();
