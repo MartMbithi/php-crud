@@ -68,10 +68,7 @@
                 </a>
                 <ul class="collapse submenu list-unstyled" id="lo" data-parent="#accordionExample">
                     <li>
-                        <a href="borrow_book.php"> Borrow Book </a>
-                    </li>
-                    <li>
-                        <a href="manage_operations.php"> Manage Operations </a>
+                        <a href="view_operations.php"> View Operations </a>
                     </li>
                 </ul>
             </li>
@@ -87,17 +84,11 @@
                 </a>
                 <ul class="collapse submenu list-unstyled" id="reports" data-parent="#accordionExample">
                     <li>
-                        <a href="books.php">Borrowed Books </a>
+                        <a href="library_operations.php".php">Library Operations </a>
                     </li>
                     <li>
-                        <a href="library_operations.php">Lost Books </a>
+                        <a href="fines.php">Fines </a>
                     </li>
-                    <li>
-                        <a href="fines.php">Damanged Books</a>
-                    </li> 
-                    <li>
-                        <a href="fines.php">Fines</a>
-                    </li> 
                 </ul>
             </li>
 
