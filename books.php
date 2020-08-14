@@ -3,41 +3,19 @@
     include('config/config.php');
     include('config/checklogin.php');
     check_login();
-    //Delete Student Account
+    //Delete Book
     if(isset($_GET['delete']))
     {
+          $category = $_GET['category'];
           $id=intval($_GET['delete']);
-          $adn="DELETE FROM  students  WHERE  student_id = ?";
+          $adn="DELETE FROM  books  WHERE  book_id = ?";
           $stmt= $mysqli->prepare($adn);
           $stmt->bind_param('i',$id);
           $stmt->execute();
           $stmt->close();	 
          if($stmt)
          {
-             $success = "Deleted" && header("refresh:1; url=manage_students.php");
-         }
-         else
-         {
-             $err = "Try Again Later";
-         }
-    }
-    //Revoke Student Login Permission
-    if(isset($_GET['revoke_login']))
-    {
-          $id= $_GET['revoke_login'];
-          $adn="DELETE FROM  login  WHERE  login_id = ?";
-          $postQuery="UPDATE students SET student_account_status= 'Denied Login' WHERE student_login_id =?";
-          $stmt= $mysqli->prepare($adn);
-          $postStmt = $mysqli->prepare($postQuery);
-          $stmt->bind_param('s', $id);
-          $postStmt->bind_param('s', $id);
-          $stmt->execute();
-          $postStmt->execute();
-          $stmt->close();	
-          $postStmt->close(); 
-         if($stmt && $postStmt)
-         {
-             $success = "Login Permissions Revoked" && header("refresh:1; url=manage_students.php");
+             $success = "Deleted" && header("refresh:1; url=manage_books_per_category.php?category=$category");
          }
          else
          {
@@ -45,7 +23,6 @@
          }
     }
     require_once('partials/_head.php');
-    
 ?>
 <body>
     
@@ -67,7 +44,7 @@
                                 <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Reporting</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><span>Students</span></li>
+                                <li class="breadcrumb-item active" aria-current="page"><span>Books</span></li>
                             </ol>
                         </nav>
                     </div>
@@ -99,38 +76,37 @@
                                 <table id="html5-extension" class="table table-hover non-hover" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Reg Number</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Phone</th>
-                                            <th>Address</th>
-                                            <th>Gender</th>
+                                            <th>ISBN Number</th>
+                                            <th>Title</th>
+                                            <th>Author</th>
+                                            <th>Publisher</th>
+                                            <th>Status</th>
+                                            <th>Copies</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                            //Get all Students
-                                            $ret="SELECT * FROM  students"; 
+                                            //Get all Books
+                                            $ret="SELECT * FROM books "; 
                                             $stmt= $mysqli->prepare($ret) ;
                                             $stmt->execute();
                                             $res=$stmt->get_result();
-                                            while($std=$res->fetch_object())
+                                            while($book=$res->fetch_object())
                                             {
-
                                         ?>
                                             <tr>
                                                 <td>
                                                     <span class="badge outline-badge-success">
-                                                        <a href="view_student.php?view=<?php echo $std->student_id;?>">
-                                                            <?php echo $std->student_reg_number;?>
+                                                        <a href="view_book.php?view=<?php echo $book->book_id;?>">
+                                                            <?php echo $book->book_isbn_no;?>
                                                         </a>
                                                     </span>
                                                 </td>
-                                                <td><?php echo $std->student_name;?></td>
-                                                <td><?php echo $std->student_email;?></td>
-                                                <td><?php echo $std->student_phone_number;?></td>
-                                                <td><?php echo $std->student_address;?></td>
-                                                <td><?php echo $std->student_gender;?></td>                                               
+                                                <td><?php echo $book->book_title;?></td>
+                                                <td><?php echo $book->book_author;?></td>
+                                                <td><?php echo $book->book_publisher;?></td>
+                                                <td><?php echo $book->book_status;?></td>
+                                                <td><?php echo $book->book_copies;?> Copies</td>
                                             </tr>
                                         <?php }?>
                                     </tbody>
