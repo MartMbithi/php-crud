@@ -12,12 +12,12 @@
 
             $login_id = $_POST['login_id'];
             $login_user_name =$_POST['login_user_name'];
-            $login_password = $_POST['login_password'];
+            $login_password = sha1(md5($_POST['login_password']));
             $login_user_permission = $_POST['login_user_permission'];
 
             //Insert Captured information to a database table
             $postQuery="UPDATE librarians SET librarian_account_status=? WHERE librarian_id =?";
-            $loginQry = "INSERT INTO logni (login_id, login_user_name, login_password, login_user_permission) VALUES(?,?,?,?)";
+            $loginQry = "INSERT INTO login (login_id, login_user_name, login_password, login_user_permission) VALUES(?,?,?,?)";
             $postStmt = $mysqli->prepare($postQuery);
             $loginStmt = $mysqli->prepare($loginQry);
             //bind paramaters
@@ -122,11 +122,11 @@
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-6">
                                                 <label for="inputAddress">Login ID </label>
-                                                <input type="email" name="login_id" value="<?php echo $lib->librarian_login_id;?>" class="form-control">
+                                                <input type="text" name="login_id" value="<?php echo $lib->librarian_login_id;?>" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6" style="display:hidden">
                                                 <label for="inputAddress">Account Status </label>
-                                                <input type="email" name="librarian_account_status" value="Can Login" class="form-control">
+                                                <input type="text" name="librarian_account_status" value="Can Login" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputAddress2">Login Email</label>
