@@ -67,7 +67,7 @@
                                     <tbody>
                                         <?php
                                             //Get all Books
-                                            $ret="SELECT * FROM library_operations WHERE operation_type = 'Borrow'  "; 
+                                            $ret="SELECT * FROM library_operations WHERE operation_status = 1  "; 
                                             $stmt= $mysqli->prepare($ret) ;
                                             $stmt->execute();
                                             $res=$stmt->get_result();

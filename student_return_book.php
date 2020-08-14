@@ -6,14 +6,9 @@
     
         if(isset($_POST['returnBook']))
         {
-            $operation_number = $_POST['operation_number'];
-            $operation_checksum  = $_POST['operation_checksum'];
             $operation_type = $_POST['operation_type'];
-            $operation_desc = $_POST['operation_desc'];
-            $book_title = $_POST['book_title'];
-            $book_isbn_no = $_POST['book_isbn_no'];
-            $book_author = $_POST['book_author'];
-            $operation_id = $_POST['operation_id'];
+            $id = $_GET['id'];
+            $operation_status = $_POST['operation_status'];
 
             //Handle Foregn Keys
             $student_operation_student_id = $_POST['student_operation_student_id'];
@@ -26,8 +21,8 @@
             $book = $_GET['book'];
 
             //Insert Captured information to a database table
-            $postQuery="INSERT INTO library_operations (operation_id, book_title, book_isbn_no, book_author, operation_number, operation_checksum, operation_type, operation_desc) VALUES(?,?,?,?,?,?,?,?)";
-            $foregnQry = "INSERT INTO student_operations(student_operation_student_id, student_operation_book_id, student_operation_start_date, student_operation_end_date, Student_operation_operation_id) VALUES(?,?,?,?,?)";
+            $postQuery="UPDATE library_operations SET operation_status =?, operation_type=? WHERE operation_id =?";
+            $foregnQry = "INSERT student_operations(student_operation_student_id, student_operation_book_id, student_operation_start_date, student_operation_end_date, Student_operation_operation_id) VALUES(?,?,?,?,?)";
             $bookQry = "UPDATE books SET book_copies =? WHERE book_isbn_no = ?";
 
             //Prepare 
@@ -36,7 +31,7 @@
             $bookStmt = $mysqli->prepare($bookQry);
 
             //bind paramaters
-            $rc=$postStmt->bind_param('ssssssss', $operation_id, $book_title, $book_isbn_no, $book_author,$operation_number, $operation_checksum, $operation_type, $operation_desc);
+            $rc=$postStmt->bind_param('iss', $operation_status, $operation_type,$id);
             $rc = $foregnStmt->bind_param('iisss', $student_operation_student_id, $student_operation_book_id, $student_operation_start_date, $student_operation_end_date, $operation_id);
             $rc = $bookStmt->bind_param('ss', $book_copies, $book);
             $postStmt->execute();
@@ -134,6 +129,7 @@
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4">Library Operation Number</label>
                                                 <input type="text" name="operation_number" required value="LMS-<?php echo $alpha;?>-<?php echo $beta;?>" class="form-control">
+                                                <input type="hidden" name="operation_status" required value="2" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputPassword4">Library Operation Checksum</label>
@@ -220,12 +216,6 @@
                                             <div class="form-group col-md-6">
                                                 <label for="inputPassword4">Return Date</label>
                                                 <input type="text" value="<?php echo $std->student_operation_end_date;?>" required name="student_operation_end_date"   class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-row mb-4">
-                                            <div class="form-group col-md-12">
-                                                <label for="inputAddress">Description</label>
-                                                <textarea  name="operation_desc"  rows="10" class="form-control"></textarea>
                                             </div>
                                         </div>
                                       <button type="submit" name="returnBook" class="btn btn-primary mt-3">Return Book</button>

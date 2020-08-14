@@ -14,6 +14,7 @@
             $book_isbn_no = $_POST['book_isbn_no'];
             $book_author = $_POST['book_author'];
             $operation_id = $_POST['operation_id'];
+            $operation_status = $_POST['operation_status'];
 
             //Handle Foregn Keys
             $student_operation_student_id = $_POST['student_operation_student_id'];
@@ -25,7 +26,7 @@
             $book_copies = $_POST['book_copies'];
 
             //Insert Captured information to a database table
-            $postQuery="INSERT INTO library_operations (operation_id, book_title, book_isbn_no, book_author, operation_number, operation_checksum, operation_type, operation_desc) VALUES(?,?,?,?,?,?,?,?)";
+            $postQuery="INSERT INTO library_operations (operation_status, operation_id, book_title, book_isbn_no, book_author, operation_number, operation_checksum, operation_type, operation_desc) VALUES(?,?,?,?,?,?,?,?,?)";
             $foregnQry = "INSERT INTO student_operations(student_operation_student_id, student_operation_book_id, student_operation_start_date, student_operation_end_date, Student_operation_operation_id) VALUES(?,?,?,?,?)";
             $bookQry = "UPDATE books SET book_copies =? WHERE book_id = ?";
 
@@ -35,7 +36,7 @@
             $bookStmt = $mysqli->prepare($bookQry);
 
             //bind paramaters
-            $rc=$postStmt->bind_param('ssssssss', $operation_id, $book_title, $book_isbn_no, $book_author,$operation_number, $operation_checksum, $operation_type, $operation_desc);
+            $rc=$postStmt->bind_param('issssssss', $operation_status, $operation_id, $book_title, $book_isbn_no, $book_author,$operation_number, $operation_checksum, $operation_type, $operation_desc);
             $rc = $foregnStmt->bind_param('iisss', $student_operation_student_id, $book, $student_operation_start_date, $student_operation_end_date, $operation_id);
             $rc = $bookStmt->bind_param('si', $book_copies, $book);
             $postStmt->execute();
@@ -133,6 +134,7 @@
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4">Library Operation Number</label>
                                                 <input type="text" name="operation_number" required value="LMS-<?php echo $alpha;?>-<?php echo $beta;?>" class="form-control">
+                                                <input type="hidden" name="operation_status" required value="1" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputPassword4">Library Operation Checksum</label>
