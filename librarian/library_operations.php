@@ -3,23 +3,7 @@
     include('config/config.php');
     include('config/checklogin.php');
     check_login();
-    if(isset($_GET['delete']))
-    {
-          $id=intval($_GET['delete']);
-          $adn="DELETE FROM  library_operations  WHERE  operation_id = ?";
-          $stmt= $mysqli->prepare($adn);
-          $stmt->bind_param('i',$id);
-          $stmt->execute();
-          $stmt->close();	 
-         if($stmt)
-         {
-             $success = "Deleted" && header("refresh:1; url=manage_operations.php");
-         }
-         else
-         {
-             $err = "Try Again Later";
-         }
-    }
+    
     require_once('partials/_head.php');
 ?>
 <body>

@@ -3,24 +3,8 @@
     include('config/config.php');
     include('config/checklogin.php');
     check_login();
-    if(isset($_GET['delete']))
-    {
-          $id=intval($_GET['delete']);
-          $adn="DELETE FROM  library_operations  WHERE  operation_id = ?";
-          $stmt= $mysqli->prepare($adn);
-          $stmt->bind_param('i',$id);
-          $stmt->execute();
-          $stmt->close();	 
-         if($stmt)
-         {
-             $success = "Deleted" && header("refresh:1; url=manage_operations.php");
-         }
-         else
-         {
-             $err = "Try Again Later";
-         }
-    }
     require_once('partials/_head.php');
+    
 ?>
 <body>
     
@@ -42,7 +26,7 @@
                                 <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Reporting</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><span>Operations</span></li>
+                                <li class="breadcrumb-item active" aria-current="page"><span>Charges</span></li>
                             </ol>
                         </nav>
                     </div>
@@ -63,6 +47,7 @@
             require_once('partials/_sidebar.php');?>
         ?>
         <!--  END SIDEBAR  -->
+
         <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
             <div class="layout-px-spacing">
@@ -73,39 +58,24 @@
                                 <table id="html5-extension" class="table table-hover non-hover" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Number</th>
-                                            <th>Checksum</th>
-                                            <th>Type</th>
-                                            <th>Book Isbn Number</th>
-                                            <th>Book Title</th>
-                                            <th>Book Author</th>
-                                            <th>Created At</th>
+                                            <th>Charge Name</th>
+                                            <th>Charge Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                            //Get all library operations
-                                            $ret="SELECT * FROM library_operations"; 
+                                            //Get all Charges
+                                            $ret="SELECT * FROM charges  "; 
                                             $stmt= $mysqli->prepare($ret) ;
                                             $stmt->execute();
                                             $res=$stmt->get_result();
-                                            while($ops=$res->fetch_object())
+                                            while($c=$res->fetch_object())
                                             {
+
                                         ?>
                                             <tr>
-                                                <td>
-                                                    <span class="badge outline-badge-success">
-                                                        <a href="view_operation.php?view=<?php echo $ops->operation_id;?>">
-                                                            <?php echo $ops->operation_number;?>
-                                                        </a>
-                                                    </span>
-                                                </td>
-                                                <td><?php echo $ops->operation_checksum;?></td>
-                                                <td><?php echo $ops->operation_type;?></td>
-                                                <td><?php echo $ops->book_isbn_no;?></td>
-                                                <td><?php echo $ops->book_title;?></td>
-                                                <td><?php echo $ops->book_author;?></td>
-                                                <td><?php echo date('d-M-Y', strtotime($ops->created_at));?></td>
+                                                <td><?php echo $c->charge_name;?></td>
+                                                <td>Ksh <?php echo $c->charge_amount;?></td>
                                             </tr>
                                         <?php }?>
                                     </tbody>
