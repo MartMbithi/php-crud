@@ -92,12 +92,12 @@
                     </div>
 
                     <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 layout-spacing">
-                        <a href="borrow_book.php">
+                        <a href="view_books.php">
                             <div class="widget widget-card-four">
                                 <div class="widget-content">
                                     <div class="w-content">
                                         <div class="w-info">
-                                            <p class="">Borrow Book</p>
+                                            <p class="">Books </p>
                                         </div>
                                         <div class="">
                                             <div class="w-icon">
