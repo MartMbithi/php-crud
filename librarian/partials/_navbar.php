@@ -1,21 +1,21 @@
 <?php
     //Load Navigation With Logged in User Session
-    $login_user_name = $_SESSION['login_user_name'];
-    //$login_id = $_SESSION['login_id'];
-    $ret = "SELECT * FROM  administrator  WHERE admin_email = '$login_user_name' || admin_username = '$login_user_name' "; 
+    //$login_user_name = $_SESSION['login_user_name'];
+    $login_id = $_SESSION['login_id'];
+    $ret = "SELECT * FROM  librarians  WHERE librarian_login_id = '$login_id'"; 
     $stmt = $mysqli->prepare($ret) ;
     $stmt->execute() ;
     $res = $stmt->get_result();
-    while($admin = $res->fetch_object())
+    while($lib = $res->fetch_object())
     {
         //default profile pic if logged in user has no profile picture
-        if($admin->admin_profile_pic == '')
+        if($lib->librarian_profile_picture == '')
         {
-            $profilePic = "<img src='assets/img/boy.png' class='img-fluid' alt='Admin Dpic'>";
+            $profilePic = "<img src='../assets/img/boy.png' class='img-fluid' alt='Admin Dpic'>";
         }
         else
         {
-            $profilePic = "<img src='assets/img/$admin->admin_profile_pic' class='img-fluid' alt='Admin Dpic'>";
+            $profilePic = "<img src='../assets/img/$lib->librarian_profile_picture' class='img-fluid' alt='Admin Dpic'>";
         }
 ?>
     <div class="header-container fixed-top">
@@ -24,7 +24,7 @@
             <ul class="navbar-item theme-brand flex-row  text-center">
                 <li class="nav-item theme-logo">
                     <a href="dashboard.php">
-                        <img src="assets/img/logo.svg" class="navbar-logo" alt="logo">
+                        <img src="../assets/img/logo.svg" class="navbar-logo" alt="logo">
                     </a>
                 </li>
                 <li class="nav-item theme-text">

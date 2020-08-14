@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include('../config/config.php');
+    include('config/config.php');
     //login 
     if(isset($_POST['login']))
     {
@@ -13,8 +13,7 @@
        $stmt -> bind_result($login_user_permission, $login_user_name, $login_password, $login_id);//bind result
        $rs=$stmt->fetch();
        $_SESSION['login_id'] = $login_id;
-       $_SESSION['login_user_name'] = $login_user_name;
-       if($rs && $login_user_permission == '1')
+       if($rs && $login_user_permission == '0')
        {
          //if its sucessfull
          header("location:dashboard.php");
@@ -24,7 +23,7 @@
          $err = "Incorrect Authentication Credentials ";
        }
     }
-    require_once('../partials/_head.php');
+    require_once('partials/_head.php');
 ?>
 <body class="form">
     <div class="form-container outer">
