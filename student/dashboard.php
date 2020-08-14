@@ -61,7 +61,7 @@
                                 <div class="w-content">
                                     <div class="w-info">
                                         <h6 class="value"><?php echo $std;?></h6>
-                                        <p class="">Enrolled Students</p>
+                                        <p class="">My Borrowed Books</p>
                                     </div>
                                     <div class="">
                                         <div class="w-icon">
@@ -79,7 +79,7 @@
                                 <div class="w-content">
                                     <div class="w-info">
                                         <h6 class="value"><?php echo $bookCats;?></h6>
-                                        <p class="">Book Categories</p>
+                                        <p class="">My Lost Books</p>
                                     </div>
                                     <div class="">
                                         <div class="w-icon">
@@ -97,7 +97,7 @@
                                 <div class="w-content">
                                     <div class="w-info">
                                         <h6 class="value"><?php echo $books;?></h6>
-                                        <p class="">Books</p>
+                                        <p class="">My Damanged Books</p>
                                     </div>
                                     <div class="">
                                         <div class="w-icon">
@@ -109,11 +109,11 @@
                         </div>
                     </div>
 
-                    <div class="col-xl-9 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
                         <div class="widget widget-chart-three">
                             <div class="widget-heading">
                                 <div class="">
-                                    <h5 class="">Library Operations</h5>
+                                    <h5 class="">My Library Operations</h5>
                                 </div>
 
                                 <div class="dropdown  custom-dropdown">
@@ -125,25 +125,6 @@
 
                             <div class="widget-content">
                                 <div id="uniqueVisits"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-                        <div class="widget widget-activity-three">
-
-                            <div class="widget-heading">
-                                <h5 class="">Notifications</h5>
-                            </div>
-                            <div class="widget-content">
-
-                                <div class="mt-container mx-auto">
-                                    <div class="timeline-line">
-                                        <?php
-                                            require_once('partials/_notifications.php');
-                                        ?>                                                                        
-                                    </div>                                    
-                                </div>
                             </div>
                         </div>
                     </div>
