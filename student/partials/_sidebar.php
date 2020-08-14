@@ -21,25 +21,6 @@
                 </ul>
             </li>
 
-            <li class="menu">
-                <a href="#students" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <div class="">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>                        
-                        <span>Students</span>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                </a>
-                <ul class="collapse submenu list-unstyled" id="students" data-parent="#accordionExample">
-                    <li>
-                        <a href="add_student.php"> Add </a>
-                    </li>
-                    <li>
-                        <a href="manage_students.php"> Manage  </a>
-                    </li>
-                </ul>
-            </li>
 
             <li class="menu">
                 <a href="#book_categories" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -53,10 +34,7 @@
                 </a>
                 <ul class="collapse submenu list-unstyled" id="book_categories" data-parent="#accordionExample">
                     <li>
-                        <a href="add_book_categories.php"> Add </a>
-                    </li>
-                    <li>
-                        <a href="manage_book_categories.php"> Manage Categories </a>
+                        <a href="view_book_categories.php">View Categories </a>
                     </li>
                 </ul>
             </li>
@@ -73,10 +51,7 @@
                 </a>
                 <ul class="collapse submenu list-unstyled" id="books" data-parent="#accordionExample">
                     <li>
-                        <a href="add_books.php"> Add </a>
-                    </li>
-                    <li>
-                        <a href="manage_books.php"> Manage Books </a>
+                        <a href="view_books.php">View Books </a>
                     </li>
                 </ul>
             </li>
@@ -96,40 +71,10 @@
                         <a href="borrow_book.php"> Borrow Book </a>
                     </li>
                     <li>
-                        <a href="return_book.php"> Return Book </a>
-                    </li>
-                    <li>
-                        <a href="lost_books.php"> Lost Books </a>
-                    </li>
-                    <li>
-                        <a href="damanged_books.php"> Damanged Books </a>
-                    </li>
-                    <li>
                         <a href="manage_operations.php"> Manage Operations </a>
                     </li>
                 </ul>
             </li>
-
-            <li class="menu">
-                <a href="#charges" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>                         
-                        <span>Charges</span>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                </a>
-                <ul class="collapse submenu list-unstyled" id="charges" data-parent="#accordionExample">
-                    <li>
-                        <a href="add_charges.php"> Add </a>
-                    </li>
-                    <li>
-                        <a href="manage_charges.php"> Manage Charges </a>
-                    </li>
-                </ul>
-            </li>
-
             <li class="menu">
                 <a href="#reports" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
@@ -142,17 +87,14 @@
                 </a>
                 <ul class="collapse submenu list-unstyled" id="reports" data-parent="#accordionExample">
                     <li>
-                        <a href="students.php">Students </a>
+                        <a href="books.php">Borrowed Books </a>
                     </li>
                     <li>
-                        <a href="book_categories.php">Book Categories </a>
+                        <a href="library_operations.php">Lost Books </a>
                     </li>
                     <li>
-                        <a href="books.php">Books </a>
-                    </li>
-                    <li>
-                        <a href="library_operations.php">Library Operations </a>
-                    </li>
+                        <a href="fines.php">Damanged Books</a>
+                    </li> 
                     <li>
                         <a href="fines.php">Fines</a>
                     </li> 
