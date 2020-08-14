@@ -22,26 +22,6 @@
             </li>
 
             <li class="menu">
-                <a href="#librarians" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>                         
-                        <span>Librarians</span>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                </a>
-                <ul class="collapse submenu list-unstyled" id="librarians" data-parent="#accordionExample">
-                    <li>
-                        <a href="add_librarian.php"> Add  </a>
-                    </li>
-                    <li>
-                        <a href="manage_librarians.php"> Manage  </a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="menu">
                 <a href="#students" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>                        
@@ -161,9 +141,6 @@
                     </div>
                 </a>
                 <ul class="collapse submenu list-unstyled" id="reports" data-parent="#accordionExample">
-                    <li>
-                        <a href="librarians.php">Librarians </a>
-                    </li>
                     <li>
                         <a href="students.php">Students </a>
                     </li>
