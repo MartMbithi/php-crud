@@ -51,13 +51,13 @@
                 $query="UPDATE login SET  login_password =? WHERE login_user_name =?";
                 $stmt = $mysqli->prepare($query);
                 //bind paramaters
-                $rc=$stmt->bind_param('si', $new_password, $login_user_name);
+                $rc=$stmt->bind_param('ss', $new_password, $login_user_name);
                 $stmt->execute();
 
                 //declare a varible which will be passed to alert function
                 if($stmt)
                 {
-                    $success = "Password Changed"; // && header("refresh:1; url=profile.php");
+                    $success = "Password Changed" && header("refresh:1; url=profile.php");
                 }
                 else 
                 {
