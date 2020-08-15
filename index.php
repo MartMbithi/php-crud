@@ -1,5 +1,5 @@
 <?php
- require_once('sudo/assets/config/config.php');
+ require_once('config/config.php');
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -77,13 +77,13 @@
                                 <a href="books.php">Books</a>
                             </li>
                             <li>
-                                <a href="lib_user/pages_std_index.php">Library User Login</a>
+                                <a href="student/">Student Login</a>
                             </li>
                             <li>
-                                <a href="staff/pages_staff_index.php">Staff Login</a>
+                                <a href="librarian/">Librarian Login</a>
                             </li>
                             <li>
-                                <a href="sudo/pages_sudo_index.php">Admin Login</a>
+                                <a href="login.php">Admin Login</a>
                             </li>
                         </ul>
                     </div>
@@ -124,7 +124,7 @@
                             <div class="panel-body">
                                 <div class="tab-content">
                                     <div class="tab-pane fade in active" id="book">
-                                        <form action="books.php">
+                                        <form action="landing_books.php">
                                             <div class="input-group">
                                                 <input type="text" class="form-control" placeholder="Enter book name">
                                                 <div class="input-group-btn">
@@ -134,7 +134,7 @@
                                         </form>
                                     </div>
                                     <div class="tab-pane fade" id="author">
-                                        <form action="#">
+                                        <form action="landing_books.php">
                                             <div class="input-group">
                                                 <input type="text" class="form-control" placeholder="Enter author name">
                                                 <div class="input-group-btn">
@@ -144,7 +144,7 @@
                                         </form>
                                     </div>
                                     <div class="tab-pane fade" id="publisher">
-                                        <form action="#">
+                                        <form action="landing_books.php">
                                             <div class="input-group">
                                                 <input type="text" class="form-control" placeholder="Enter publisher name">
                                                 <div class="input-group-btn">
@@ -186,7 +186,7 @@
                 <!--Show Book Categories-->
                 <?php
                     //Fetch all book categories
-                    $ret="SELECT * FROM  iL_BookCategories"; 
+                    $ret="SELECT * FROM  book_categories"; 
                     $stmt= $mysqli->prepare($ret) ;
                     $stmt->execute() ;//ok
                     $res=$stmt->get_result();
@@ -206,7 +206,7 @@
                                 </ul>
                             </div>
                             <div class="space-20"></div>
-                            <a href="books.php"><?php echo $row->bc_name;?></a>
+                            <a href="landing_books.php"><?php echo $row->category_name;?></a>
                         </div>
                     </div>
                 <?php }?>
@@ -215,14 +215,14 @@
             <div class="space-60"></div>
             <div class="row">
                 <div class="col-xs-12 text-center">
-                    <a href="books.php" class="btn btn-primary">See More</a>
+                    <a href="landing_books.php" class="btn btn-primary">See More</a>
                 </div>
             </div>
             <div class="space-80"></div>
         </div>
     </section>
     <!--Footer-->
-    <?php require_once('partials/footer.php');?>
+    <?php require_once('includes/footer.php');?>
 
     <!-- Vandor-JS -->
     <script src="js/vendor/jquery-1.12.4.min.js"></script>
