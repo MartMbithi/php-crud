@@ -1,5 +1,23 @@
 <?php
- require_once('config/config.php');
+    require_once('config/config.php');
+    $book_id = $_GET['book_id'];
+    $ret="SELECT * FROM  books WHERE book_id = ?"; 
+    $stmt= $mysqli->prepare($ret) ;
+    $stmt->bind_param('i', $book_id);
+    $stmt->execute() ;//ok
+    $res=$stmt->get_result();
+    while($row=$res->fetch_object())
+    {
+    //load default book cover page if book is missing a cover image
+    if($row->book_coverimage == '')
+    {
+        $cover_image = "<img src='assets/img/books/book_category.jpg' class='img-fluid img-thumbnail' alt='Book Image'>";
+    }
+    else
+    {
+        $cover_image = "<img src='assets/img/books/$row->book_coverimage' class='img-fluid img-thumbnail' alt='Book Image'>";
+
+    }
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -12,7 +30,7 @@
 
     <!-- Place favicon.ico in the root directory -->
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-    <link rel="shortcut icon" type="image/ico" href="images/favicon.png" />
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico" />
 
     <!-- Plugin-CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -59,7 +77,7 @@
                     <div class="navbar-right in fade" id="mainmenu">
                         <ul class="nav navbar-nav nav-white text-uppercase">
                             <li class="">
-                                <a href="index.php">Home</a>
+                                <a href=home>Home</a>
                             </li>
                             <li class="active">
                                 <a href="landing_books.php">Books</a>
@@ -107,60 +125,18 @@
         <div class="space-80"></div>
         <div class="container">
             <div class="row">
-                <div class="col-xs-12 col-md-10 pull-right">
-                    <h4>Search Box</h4>
-                    <div class="space-5"></div>
-                    <form action="books.php">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Enter book name">
-                            <div class="input-group-btn">
-                                <button type="submit" class="btn btn-primary"><i class="icofont icofont-search-alt-2"></i></button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="col-xs-12 col-md-12">
                     <div class="space-30"></div>
                     <div class="row">
-                        <div class="pull-right col-xs-12 col-sm-7 col-md-6">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="control-label col-xs-4" for="sort">Sort By : </label>
-                                    <div class="col-xs-8">
-                                        <div class="form-group">
-                                            <select name="sort" id="sort" class="form-control">
-                                                <option value="">Best Match</option>
-                                                <option value="">Best Book</option>
-                                                <option value="">Latest Book</option>
-                                                <option value="">Old Book</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="space-20"></div>
-                    <div class="row">
-                        <!--Books-->
-                        <?php
-                            $ret="SELECT * FROM  books"; 
-                            $stmt= $mysqli->prepare($ret) ;
-                            $stmt->execute() ;//ok
-                            $res=$stmt->get_result();
-                            while($row=$res->fetch_object())
-                            {
-                               
-                                
-                        ?>
-                            <div class="col-xs-12 col-md-6">
+                            <div class="col-xs-12 col-md-12">
                                 <div class="category-item well yellow">
                                     <div class="media">
-                                        <div class="media-left">
+                                        <div>
+                                            <?php echo $cover_image;?>
                                         </div>
                                         <div class="media-body">
                                             <h5><?php echo $row->book_title;?></h5>
                                             <h6>By <?php echo $row->book_author;?></h6>
-                                            <h6>Publisher: <?php echo $row->book_publisher;?></h6>
                                             <div class="space-10"></div>
                                             <ul class="list-inline list-unstyled rating-star">
                                                 <li class="active"><i class="icofont icofont-star"></i></li>
@@ -169,45 +145,16 @@
                                                 <li class="active"><i class="icofont icofont-star"></i></li>
                                                 <li><i class="icofont icofont-star"></i></li>
                                             </ul>
+                                            <p><?php echo $row->book_summary;?></p>
                                             <div class="space-10"></div>
-                                            <a href="view_landing_book.php?book_id=<?php echo $row->book_id;?>" class="text-primary">View Book</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        <?php }?>
                         <!--Book-->
-
                     </div>
                     <div class="space-60"></div>
                 </div>
-                <!-- Sidebar-Start -->
-                <div class="col-xs-12 col-md-2">
-                    <aside>
-                        <h3><i class="icofont icofont-filter"></i> Filter By</h3>
-                        <div class="space-30"></div>
-                        <div class="sigle-sidebar">
-                            <h4>Book Category</h4>
-                            <hr>
-                            <ul class="list-unstyled menu-tip">
-                            <?php
-                                //Fetch all book categories
-                                $ret="SELECT * FROM  book_categories"; 
-                                $stmt= $mysqli->prepare($ret) ;
-                                $stmt->execute() ;//ok
-                                $res=$stmt->get_result();
-                                while($row=$res->fetch_object())
-                                {
-                            ?>
-                                <li><a href="#"><?php echo $row->category_name;?></a></li>
-                            <?php }?>
-                            </ul>
-                            <a href="#" class="btn btn-primary btn-xs">See All</a>
-                        </div>
-                        <div class="space-20"></div>
-                    </aside>
-                </div>
-                <!-- Sidebar-End -->
             </div>
         </div>
         <div class="space-80"></div>
@@ -233,5 +180,5 @@
 
 </body>
 
-
 </html>
+<?php }?>

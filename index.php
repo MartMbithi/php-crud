@@ -74,7 +74,7 @@
                                 <a href="#sc1">Home</a>
                             </li>
                             <li>
-                                <a href="books.php">Books</a>
+                                <a href="landing_books.php">Books</a>
                             </li>
                             <li>
                                 <a href="student/">Student Login</a>

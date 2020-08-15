@@ -46,9 +46,9 @@
                 <h4 class="text-white">Useful Links</h4>
                 <div class="space-20"></div>
                 <ul class="list-unstyled menu-tip">
-                    <li><a href="lib_user/pages_std_index.php">Library User Login</a></li>
-                    <li><a href="staff/pages_staff_index.php">Libray Staff Login</a></li>
-                    <li><a href="sudo/pages_sudo_index.php">Library Admin Login</a></li>
+                    <li><a href="student/">Student Login</a></li>
+                    <li><a href="librarian/">Librarian Login</a></li>
+                    <li><a href="login.php">Admin Login</a></li>
                 </ul>
             </div>
         </div>
