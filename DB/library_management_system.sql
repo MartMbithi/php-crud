@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 15, 2020 at 12:29 AM
+-- Generation Time: Aug 15, 2020 at 12:21 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.26
 
@@ -203,9 +203,9 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`login_id`, `login_user_name`, `login_password`, `login_user_permission`) VALUES
-('1', 'sysadmin@lms.org', 'a69681bcf334ae130217fea4505fd3c994f5683f', '1'),
-('10e0b6dc958adfb5b094d8935a13aeadbe783c25', 'librarian002@lms.org', 'a69681bcf334ae130217fea4505fd3c994f5683f', '0'),
-('4de9a99476e9964fdbbe77bad954a9544eca29c2', 'student001@lms.org', 'a69681bcf334ae130217fea4505fd3c994f5683f', ''),
+('1', 'sysadmin@lms.org', 'adcd7048512e64b48da55b027577886ee5a36350', '1'),
+('10e0b6dc958adfb5b094d8935a13aeadbe783c25', 'librarian002@lms.org', 'adcd7048512e64b48da55b027577886ee5a36350', '0'),
+('4de9a99476e9964fdbbe77bad954a9544eca29c2', 'student001@lms.org', 'adcd7048512e64b48da55b027577886ee5a36350', ''),
 ('7a0c21027b66ada3be71c2e779d7b73fdaab1a5a', 'student002@lms.org', 'a69681bcf334ae130217fea4505fd3c994f5683f', ''),
 ('d2a23aa263d5c2afab969bb1a18b4340f7137a20', 'student003@lms.org', 'a69681bcf334ae130217fea4505fd3c994f5683f', '');
 
