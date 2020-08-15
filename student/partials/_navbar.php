@@ -29,7 +29,6 @@
             <ul class="navbar-item theme-brand flex-row  text-center">
                 <li class="nav-item theme-logo">
                     <a href="dashboard.php">
-                        <img src="../assets/img/logo.svg" class="navbar-logo" alt="logo">
                     </a>
                 </li>
                 <li class="nav-item theme-text">
