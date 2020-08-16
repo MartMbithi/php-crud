@@ -65,29 +65,45 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
-                                            //Get all Books
-                                            $ret="SELECT * FROM library_operations WHERE operation_status = 1  "; 
+                                    <?php
+                                            //logic use operation id to get book id
+                                            $ret="SELECT operation_id, operation_type FROM library_operations WHERE operation_type = 'Borrow'"; 
                                             $stmt= $mysqli->prepare($ret) ;
                                             $stmt->execute();
                                             $res=$stmt->get_result();
-                                            while($book=$res->fetch_object())
+                                            while($operation=$res->fetch_object())
                                             {
+                                                $op_id = $operation->operation_id;
+                                                $ret="SELECT student_operation_book_id, student_operation_start_date   FROM student_operations WHERE Student_operation_operation_id ='$op_id' "; 
+                                                $stmt= $mysqli->prepare($ret) ;
+                                                $stmt->execute();
+                                                $res=$stmt->get_result();
+                                                while($book=$res->fetch_object())
+                                                {
+                                                    $date = $book->student_operation_start_date;
+
+                                                    $bookid = $book->student_operation_book_id;
+                                                    $ret="SELECT *  FROM books WHERE book_id ='$bookid' "; 
+                                                    $stmt= $mysqli->prepare($ret) ;
+                                                    $stmt->execute();
+                                                    $res=$stmt->get_result();
+                                                    while($book=$res->fetch_object())
+                                                    {
                                         ?>
                                             <tr>
                                                 <td><?php echo $book->book_title;?></td>
                                                 <td><?php echo $book->book_author;?></td>
                                                 <td><?php echo $book->book_isbn_no;?></td>
-                                                <td><?php echo date('d-M-Y', strtotime($book->created_at));?></td>
+                                                <td><?php echo $date;?></td>
                                                 <td>
-                                                    <a href="student_lost_book.php?book=<?php echo $book->book_isbn_no;?>&id=<?php echo $book->operation_id;?>" class="badge outline-badge-danger text-danger bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="Report Lost <?php echo $book->book_title;?>">
+                                                    <a href="student_lost_book.php?book=<?php echo $book->book_isbn_no;?>&id=<?php echo $op_id;?>" class="badge outline-badge-danger text-danger bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="Report Lost <?php echo $book->book_title;?>">
                                                         Report Lost Book
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12" y2="17"></line></svg>                                                         
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>                                                   
                                                     </a>
                                                 </td>
                                             </tr>
-                                        <?php }?>
+                                        <?php }}}?>
                                     </tbody>
                                 </table>
                             </div>

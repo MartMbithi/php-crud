@@ -8,7 +8,6 @@
         {
             $operation_type = $_POST['operation_type'];
             $id = $_GET['id'];
-            $operation_status = $_POST['operation_status'];
 
             //Handle Foregn Keys
             $student_operation_student_id = $_POST['student_operation_student_id'];
@@ -21,7 +20,7 @@
             $book = $_GET['book'];
 
             //Insert Captured information to a database table
-            $postQuery="UPDATE library_operations SET operation_status =?, operation_type=? WHERE operation_id =?";
+            $postQuery="UPDATE library_operations SET operation_type=? WHERE operation_id =?";
             $foregnQry = "INSERT student_operations(student_operation_student_id, student_operation_book_id, student_operation_start_date, student_operation_end_date, Student_operation_operation_id) VALUES(?,?,?,?,?)";
             $bookQry = "UPDATE books SET book_copies =? WHERE book_isbn_no = ?";
 
@@ -31,7 +30,7 @@
             $bookStmt = $mysqli->prepare($bookQry);
 
             //bind paramaters
-            $rc=$postStmt->bind_param('iss', $operation_status, $operation_type,$id);
+            $rc=$postStmt->bind_param('ss',  $operation_type,$id);
             $rc = $foregnStmt->bind_param('iisss', $student_operation_student_id, $student_operation_book_id, $student_operation_start_date, $student_operation_end_date, $id);
             $rc = $bookStmt->bind_param('ss', $book_copies, $book);
             $postStmt->execute();
@@ -168,7 +167,7 @@
                                         </div>
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Registration Number</label>
+                                                <label for="inputEmail4">Student Registration Number</label>
                                                 <?php
                                                     $id = $_GET['id'];
                                                     $ret="SELECT * FROM  student_operations WHERE Student_operation_operation_id = '$id'"; 
