@@ -65,7 +65,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php
+                                        <?php
                                             //logic use operation id to get book id
                                             $ret="SELECT operation_id, operation_type FROM library_operations WHERE operation_type = 'Borrow'"; 
                                             $stmt= $mysqli->prepare($ret) ;
