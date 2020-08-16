@@ -45,7 +45,7 @@
     }
 
     //Use this operation ids on students operation to borrowed book get book id
-    $ret = "SELECT * FROM  student_operations WHERE Student_operation_operation_id  = '$borrow_id'"; 
+    $ret = "SELECT * FROM  student_operations WHERE Student_operation_operation_id  = '$borrow_id' "; 
     $stmt = $mysqli->prepare($ret) ;
     $stmt->execute() ;
     $res = $stmt->get_result();
@@ -55,7 +55,7 @@
     }
 
     //Use this operation ids on students operation to get returned book id
-    $ret = "SELECT * FROM  student_operations WHERE Student_operation_operation_id  = '$return_id'"; 
+    $ret = "SELECT * FROM  student_operations WHERE Student_operation_operation_id  = '$return_id' "; 
     $stmt = $mysqli->prepare($ret) ;
     $stmt->execute() ;
     $res = $stmt->get_result();
