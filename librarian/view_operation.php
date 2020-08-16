@@ -10,20 +10,28 @@
     <?php
         require_once('partials/_navbar.php');
         $view = $_GET['view'];
-        $ret="SELECT * FROM  library_operations WHERE operation_id = '$view'"; 
-        $stmt= $mysqli->prepare($ret);
+        $ret="SELECT * FROM library_operations WHERE operation_id = '$view'"; 
+        $stmt= $mysqli->prepare($ret) ;
         $stmt->execute();
         $res=$stmt->get_result();
-        while($ops=$res->fetch_object())
+        while($operation=$res->fetch_object())
         {
-
-            $book= $_GET['book'];
-            $ret="SELECT * FROM  books WHERE book_id = '$book'"; 
-            $stmt= $mysqli->prepare($ret);
+            $op_id = $operation->operation_id;
+            $ret="SELECT student_operation_book_id, student_operation_start_date   FROM student_operations WHERE Student_operation_operation_id ='$op_id' "; 
+            $stmt= $mysqli->prepare($ret) ;
             $stmt->execute();
             $res=$stmt->get_result();
             while($book=$res->fetch_object())
             {
+                $date = $book->student_operation_start_date;
+                $bookid = $book->student_operation_book_id;
+                $ret="SELECT *  FROM books WHERE book_id ='$bookid' "; 
+                $stmt= $mysqli->prepare($ret) ;
+                $stmt->execute();
+                $res=$stmt->get_result();
+                while($book=$res->fetch_object())
+                {
+
             
     ?>
     <!--  END NAVBAR  -->
@@ -42,7 +50,7 @@
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Library Operations</a></li>
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Manage Operations</a></li>
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">View</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><span><?php echo $ops->operation_checksum;?></span></li>
+                                <li class="breadcrumb-item active" aria-current="page"><span><?php echo $operation->operation_checksum;?></span></li>
                             </ol>
                         </nav>
                     </div>
@@ -80,7 +88,7 @@
                                 </div>
                                 <div class="text-center user-info">
                                     <img src='../assets/img/book_category.jpg' class='img-thumbnail img-fluid'  alt='avatar'>
-                                    <p class="">Operation Type : <?php echo $ops->operation_type;?> Book</p>
+                                    <p class="">Operation Type : <?php echo $operation->operation_type;?> Book</p>
                                 </div>
                                 <div class="user-info-list">
                                     <div class="">
@@ -96,7 +104,7 @@
                                             </li>
                                             <li class="contacts-block__item">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path><polyline points="16 16 12 12 8 16"></polyline></svg>                                                 
-                                                Operation Checksum: <?php echo $ops->operation_checksum;?>
+                                                Operation Checksum: <?php echo $operation->operation_checksum;?>
                                             </li>
                                         </ul>
                                     </div>         
@@ -113,7 +121,7 @@
                                 <h3 class="">Operation Description</h3>
                                 <p>
                                     <?php
-                                        echo $ops->operation_desc;
+                                        echo $operation->operation_desc;
                                     ?>
                                 </p>
                             </div>                                
@@ -126,7 +134,7 @@
         </div>
         <!--  END CONTENT AREA  -->
     </div>
-    <?php require_once('partials/_scripts.php'); }}?>    
+    <?php require_once('partials/_scripts.php'); }}}?>    
 </body>
 
 </html>
