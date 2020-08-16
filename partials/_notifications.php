@@ -1,13 +1,98 @@
 <?php
-    $ret = "SELECT * FROM  library_operations ORDER BY `library_operations`.`created_at` DESC"; 
+
+    /*
+    Operation Logic
+    1. get operation id
+    2. use operation id to get book id
+    3. get book id to get book details
+    */
+
+    $ret = "SELECT * FROM  library_operations WHERE operation_type='Borrow' "; 
     $stmt = $mysqli->prepare($ret) ;
     $stmt->execute() ;
     $res = $stmt->get_result();
     while($operation = $res->fetch_object())
     {
+      $borrow_id = $operation->operation_id;
+      $date = date('d/M/Y g:i', strtotime($operation->created_at));
+    }
+
+    $ret = "SELECT * FROM  library_operations WHERE operation_type='Return' "; 
+    $stmt = $mysqli->prepare($ret) ;
+    $stmt->execute() ;
+    $res = $stmt->get_result();
+    while($operation = $res->fetch_object())
+    {
+      $return_id = $operation->operation_id;
+    }
+
+    $ret = "SELECT * FROM  library_operations WHERE operation_type='Damanged' "; 
+    $stmt = $mysqli->prepare($ret) ;
+    $stmt->execute() ;
+    $res = $stmt->get_result();
+    while($operation = $res->fetch_object())
+    {
+      $damanged_id = $operation->operation_id;
+    }
+
+    $ret = "SELECT * FROM  library_operations WHERE operation_type='Lost' "; 
+    $stmt = $mysqli->prepare($ret) ;
+    $stmt->execute() ;
+    $res = $stmt->get_result();
+    while($operation = $res->fetch_object())
+    {
+      $lost_id = $operation->operation_id;
+    }
+
+    //Use this operation ids on students operation to borrowed book get book id
+    $ret = "SELECT * FROM  student_operations WHERE Student_operation_operation_id  = '$borrow_id'"; 
+    $stmt = $mysqli->prepare($ret) ;
+    $stmt->execute() ;
+    $res = $stmt->get_result();
+    while($ops = $res->fetch_object())
+    {
+      $borrowed_book_id = $ops->student_operation_book_id;
+    }
+
+    //Use this operation ids on students operation to get returned book id
+    $ret = "SELECT * FROM  student_operations WHERE Student_operation_operation_id  = '$return_id'"; 
+    $stmt = $mysqli->prepare($ret) ;
+    $stmt->execute() ;
+    $res = $stmt->get_result();
+    while($ops = $res->fetch_object())
+    {
+        $returned_book_id = $ops->student_operation_book_id;
+    }
+
+    //Use this operation ids on students operation to get Lost  book id
+    $ret = "SELECT * FROM  student_operations WHERE Student_operation_operation_id  = '$lost_id'"; 
+    $stmt = $mysqli->prepare($ret) ;
+    $stmt->execute() ;
+    $res = $stmt->get_result();
+    while($ops = $res->fetch_object())
+    {
+        $lost_book_id = $ops->student_operation_book_id;
+    }
+
+    //Use this operation ids on students operation to get Damanged  book id
+    $ret = "SELECT * FROM  student_operations WHERE Student_operation_operation_id  = '$damanged_id'"; 
+    $stmt = $mysqli->prepare($ret) ;
+    $stmt->execute() ;
+    $res = $stmt->get_result();
+    while($ops = $res->fetch_object())
+    {
+        $damanged_book_id = $ops->student_operation_book_id;
+    }
+    
+    
+    $ret = "SELECT * FROM  books"; 
+    $stmt = $mysqli->prepare($ret) ;
+    $stmt->execute() ;
+    $res = $stmt->get_result();
+    while($book = $res->fetch_object())
+    {
         //Strip timestamp to DD-MM-YYYY H:M Formart
-        $date = date('d-M-Y g:i', strtotime($operation->created_at));
-        if($operation->operation_type == 'Borrow')
+        if($book->book_id == $borrowed_book_id)
         {
             echo 
             "
@@ -17,9 +102,9 @@
                     </div>
                     <div class='t-content'>
                         <div class='t-uppercontent'>
-                            <h6>$operation_type</h6>
+                            <h6>Borrowed Book</h6>
                         </div>
-                        $operation->book_title <br> $operation->book_isbn_no
+                        $book->book_title <br> $book->book_isbn_no
                         <div class='tags'>
                             <div class='badge badge-primary'>$date</div>
                         </div>
@@ -27,7 +112,7 @@
                 </div>
             ";
         }
-        else if($operation->operation_type =='Return')
+        else if($book->book_id == $returned_book_id)
         {
             echo 
             "
@@ -37,9 +122,9 @@
                     </div>
                     <div class='t-content'>
                         <div class='t-uppercontent'>
-                        <h6>$operation->operation_type</h6>
+                        <h6>Returned Book</h6>
                         </div>
-                        $operation->book_title <br> $operation->book_isbn_no
+                        $book->book_title <br> $book->book_isbn_no
                         <div class='tags'>
                             <div class='badge badge-success'>$date</div>
                         </div>
@@ -47,7 +132,7 @@
                 </div>
             ";
         }
-        else if($operation->operation_type == 'Lost')
+        else if($book->book_id == $lost_book_id)
         {
             echo 
             "
@@ -59,9 +144,9 @@
                     </div>
                     <div class='t-content'>
                         <div class='t-uppercontent'>
-                            <h6>$operation->operation_type</h6>
+                            <h6>Lost Book</h6>
                         </div>
-                        $operation->book_title <br> $operation->book_isbn_no
+                        $book->book_title <br> $book->book_isbn_no
                         <div class='tags'>
                             <div class='badge badge-danger'>$date</div>
                         </div>
@@ -69,7 +154,7 @@
                 </div>
             ";
         }        
-        else if($operation->operation_type == 'Damanged')
+        else if($book->book_id == $damanged_book_id)
         { 
             echo 
             "
@@ -81,9 +166,9 @@
                 </div>
                 <div class='t-content'>
                     <div class='t-uppercontent'>
-                        <h6>$operation->operation_type</h6>
+                        <h6>Damanged Book</h6>
                     </div>
-                    $operation->book_title <br> $operation->book_isbn_no
+                    $book->book_title <br> $book->book_isbn_no
                     <div class='tags'>
                         <div class='badge badge-warning'>$date</div>
                     </div>
@@ -94,23 +179,7 @@
         }
         else
         {
-            echo 
-            "
-            <div class='item-timeline timeline-new'>
-                <div class='t-dot'>
-                    <div class='t-primary'><svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-check'><polyline points='20 6 9 17 4 12'></polyline></svg></div>
-                </div>
-                <div class='t-content'>
-                    <div class='t-uppercontent'>
-                    <h6>$operation->operation_type</h6>
-                    </div>
-                    $operation->book_title <br> $operation->book_isbn_no
-                    <div class='tags'>
-                        <div class='badge badge-primary'>$date</div>
-                    </div>
-                </div>
-            </div>
-            ";
+            //Silence is the best answer 🎓 
         }
 
     }
