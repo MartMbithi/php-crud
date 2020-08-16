@@ -85,22 +85,37 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                            //Get all Books
-                                            $ret="SELECT * FROM library_operations"; 
-                                            $stmt= $mysqli->prepare($ret) ;
-                                            $stmt->execute();
-                                            $res=$stmt->get_result();
-                                            while($ops=$res->fetch_object())
-                                            {
+                                             //logic use operation id to get book id
+                                             $ret="SELECT * FROM library_operations"; 
+                                             $stmt= $mysqli->prepare($ret) ;
+                                             $stmt->execute();
+                                             $res=$stmt->get_result();
+                                             while($operation=$res->fetch_object())
+                                             {
+                                                 $op_id = $operation->operation_id;
+                                                 $ret="SELECT student_operation_book_id, student_operation_start_date   FROM student_operations WHERE Student_operation_operation_id ='$op_id' "; 
+                                                 $stmt= $mysqli->prepare($ret) ;
+                                                 $stmt->execute();
+                                                 $res=$stmt->get_result();
+                                                 while($book=$res->fetch_object())
+                                                 {
+                                                     $date = $book->student_operation_start_date;
+                                                     $bookid = $book->student_operation_book_id;
+                                                     $ret="SELECT *  FROM books WHERE book_id ='$bookid' "; 
+                                                     $stmt= $mysqli->prepare($ret) ;
+                                                     $stmt->execute();
+                                                     $res=$stmt->get_result();
+                                                     while($book=$res->fetch_object())
+                                                     {
                                         ?>
                                             <tr>
-                                                <td><?php echo $ops->operation_number;?></td>
-                                                <td><?php echo $ops->operation_checksum;?></td>
-                                                <td><?php echo $ops->operation_type;?></td>
-                                                <td><?php echo $ops->book_isbn_no;?></td>
-                                                <td><?php echo $ops->book_title;?></td>
-                                                <td><?php echo $ops->book_author;?></td>
-                                                <td><?php echo date('d-M-Y', strtotime($ops->created_at));?></td>
+                                                <td><?php echo $operation->operation_number;?></td>
+                                                <td><?php echo $operation->operation_checksum;?></td>
+                                                <td><?php echo $operation->operation_type;?></td>
+                                                <td><?php echo $book->book_isbn_no;?></td>
+                                                <td><?php echo $book->book_title;?></td>
+                                                <td><?php echo $book->book_author;?></td>
+                                                <td><?php echo date('d-M-Y', strtotime($operation->created_at));?></td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-dark btn-sm">Manage</button>
@@ -108,13 +123,14 @@
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
                                                         </button>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuReference1">
-                                                            <a class="dropdown-item" href="view_operation.php?view=<?php echo $ops->operation_id;?>">View</a>
+                                                            <a class="dropdown-item" href="view_operation.php?view=<?php echo $operation->operation_id;?>&book=<?php echo $book->book_id;?>">View</a>
                                                             <div class="dropdown-divider"></div>
+                                                            <a class="dropdown-item" href="manage_operations.php?delete=<?php echo $operation->operation_id;?>">Delete</a>
                                                         </div>
                                                     </div>
                                                 </td>
                                             </tr>
-                                        <?php }?>
+                                        <?php }}}?>
                                     </tbody>
                                 </table>
                             </div>
