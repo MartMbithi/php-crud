@@ -16,30 +16,18 @@
                 $charge_name = $_POST['charge_name'];
                 $charge_desc = $_POST['charge_desc'];
                 $charge_amount = $_POST['charge_amount'];
-                $charge_id = $_POST['charge_id'];
-
-                //Mantain Foreign Keys
-                $id  = $_GET['id'];
-                    
+                $update = $_GET['update'];
+                     
                 //Insert Captured information to a database table
-                $postQuery="INSERT INTO charges (charge_id, charge_name, charge_desc, charge_amount) VALUES(?,?,?,?)";
-                $frQry = "INSERT INTO operation_charges (operation_charge_charge_id, operation_charge_student_operation_id) VALUES(?,?)";
-                //$upQr="UPDATE library_operations SET operation_charge =? WHERE operation_id =?";
+                $postQuery="UPDATE charges SET charge_name =?, charge_desc =?, charge_amount =? WHERE charge_id =?";
                 $postStmt = $mysqli->prepare($postQuery);
-                $frStmt = $mysqli->prepare($frQry);
-                //$upStmt = $mysqli->prepare(($upQr));
                 //bind paramaters
-                $rc=$postStmt->bind_param('ssss', $charge_id, $charge_name, $charge_desc, $charge_amount);
-                $rc=$frStmt->bind_param('ss', $charge_id, $id);
-                //$rc=$upStmt->bind_param('ss', $operation_charge, $id);
+                $rc=$postStmt->bind_param('sssi', $charge_name, $charge_desc, $charge_amount, $update);
                 $postStmt->execute();
-                $frStmt->execute();
-                //$upStmt->execute();
-
                 //declare a varible which will be passed to alert function
-                if($postStmt && $frStmt )
+                if($postStmt)
                 {
-                    $success = "Charge Added" && header("refresh:1; url=manage_charges.php");
+                    $success = "Charge Updated" && header("refresh:1; url=manage_charges.php");
                 }
                 else 
                 {
@@ -62,12 +50,12 @@
     <!--  BEGIN NAVBAR  -->
     <?php 
         require_once('partials/_navbar.php');
-        $id = $_GET['id'];
-        $ret="SELECT * FROM library_operations WHERE operation_id = '$id'"; 
+        $update = $_GET['update'];
+        $ret="SELECT * FROM charges WHERE charge_id = '$update'"; 
         $stmt= $mysqli->prepare($ret) ;
         $stmt->execute();
         $res=$stmt->get_result();
-        while($book=$res->fetch_object())
+        while($c=$res->fetch_object())
         {
     ?>
     <!--  BEGIN NAVBAR  -->
@@ -82,7 +70,7 @@
                                 <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>
                                 <li class="breadcrumb-item"><a href="javascript:void(0);">Charges</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><span>Add <?php echo $book->operation_type;?> Book Charges</span></li>
+                                <li class="breadcrumb-item active" aria-current="page"><span>Update <?php echo $c->charge_name;?></span></li>
                             </ol>
                         </nav>
                     </div>
@@ -122,21 +110,20 @@
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4">Charge Name</label>
-                                                <input type="text" value="<?php echo $book->operation_type;?> Book Charge" name="charge_name" class="form-control">
-                                                <input type="hidden" value="<?php echo $charge_id;?>" name="charge_id" class="form-control">
+                                                <input type="text" value="<?php echo $c->charge_name;?>" name="charge_name" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputPassword4">Charge Amount</label>
-                                                <input type="text" name="charge_amount" class="form-control">
+                                                <input type="text" name="charge_amount" value="<?php echo $c->charge_amount;?>" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-row mb-4">
                                             <div class="form-group col-md-12">
                                                 <label for="inputAddress">Charge Description</label>
-                                                <textarea  name="charge_desc" rows="10" class="form-control"></textarea>
+                                                <textarea  name="charge_desc" rows="10" class="form-control"><?php echo $c->charge_desc;?></textarea>
                                             </div>
                                         </div>
-                                      <button type="submit" name="charges" class="btn btn-primary mt-3">Add Charge</button>
+                                      <button type="submit" name="charges" class="btn btn-primary mt-3">Update Charges</button>
                                     </form>
                                 </div>
                             </div>

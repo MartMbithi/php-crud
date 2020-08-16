@@ -66,28 +66,53 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                            //Get all uncharged library operations
-                                            $ret="SELECT * FROM library_operations WHERE operation_status != 1 AND  operation_status != 2 AND operation_charge = ''   "; 
+                                            $ret="SELECT  operation_charge_student_operation_id   FROM operation_charges "; 
                                             $stmt= $mysqli->prepare($ret) ;
                                             $stmt->execute();
                                             $res=$stmt->get_result();
-                                            while($book=$res->fetch_object())
+                                            while($charge=$res->fetch_object())
                                             {
+                                                $operation_charge_id = $charge->operation_charge_student_operation_id;
+                                            }
+                                                $ret="SELECT * FROM library_operations WHERE (operation_type != 'Borrow' AND   operation_type != 'Return') AND operation_id != '$operation_charge_id'"; 
+                                                $stmt= $mysqli->prepare($ret) ;
+                                                $stmt->execute();
+                                                $res=$stmt->get_result();
+                                                while($operation=$res->fetch_object())
+                                                {
+                                                                                                        
+                                                    $op_id = $operation->operation_id;
+                                                    $ret="SELECT student_operation_book_id, student_operation_start_date   FROM student_operations WHERE Student_operation_operation_id ='$op_id' "; 
+                                                    $stmt= $mysqli->prepare($ret) ;
+                                                    $stmt->execute();
+                                                    $res=$stmt->get_result();
+                                                    while($book=$res->fetch_object())
+                                                    {
+                                                        $date = $book->student_operation_start_date;
+                                                        $bookid = $book->student_operation_book_id;
+                                                        $ret="SELECT *  FROM books WHERE book_id ='$bookid' "; 
+                                                        $stmt= $mysqli->prepare($ret) ;
+                                                        $stmt->execute();
+                                                        $res=$stmt->get_result();
+                                                        while($book=$res->fetch_object())
+                                                        {
+
+                                                            
                                         ?>
-                                            <tr>
-                                                <td><?php echo $book->book_title;?></td>
-                                                <td><?php echo $book->book_author;?></td>
-                                                <td><?php echo $book->book_isbn_no;?></td>
-                                                <td><?php echo $book->operation_type;?></td>
-                                                <td>
-                                                    <a href="add_charges_per_book.php?id=<?php echo $book->operation_id;?>" class="badge outline-badge-success text-success bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add Charge For <?php echo $book->operation_type;?> Book">
-                                                        Add Charge
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="20 6 9 17 4 12"></polyline></svg> 
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>                                                   
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        <?php }?>
+                                                <tr>
+                                                    <td><?php echo $book->book_title;?></td>
+                                                    <td><?php echo $book->book_author;?></td>
+                                                    <td><?php echo $book->book_isbn_no;?></td>
+                                                    <td><?php echo $operation->operation_type;?></td>
+                                                    <td>
+                                                        <a href="add_charges_per_book.php?id=<?php echo $operation->operation_id;?>" class="badge outline-badge-success text-success bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add Charge For <?php echo $operation->operation_type;?> Book">
+                                                            Add Charge
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="20 6 9 17 4 12"></polyline></svg> 
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>                                                   
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                        <?php }}}?>
                                     </tbody>
                                 </table>
                             </div>
