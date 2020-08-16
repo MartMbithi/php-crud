@@ -100,7 +100,6 @@
                                                  while($book=$res->fetch_object())
                                                  {
                                                      $date = $book->student_operation_start_date;
- 
                                                      $bookid = $book->student_operation_book_id;
                                                      $ret="SELECT *  FROM books WHERE book_id ='$bookid' "; 
                                                      $stmt= $mysqli->prepare($ret) ;
