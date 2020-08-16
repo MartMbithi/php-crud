@@ -16,31 +16,28 @@
                 $charge_name = $_POST['charge_name'];
                 $charge_desc = $_POST['charge_desc'];
                 $charge_amount = $_POST['charge_amount'];
+                $charge_id = $_POST['charge_id'];
 
                 //Mantain Foreign Keys
                 $id  = $_GET['id'];
-                $operation = $_POST['operation'];
-
-                //Fix multiple entries on payments
-                $operation_charge = $_POST['operation_charge'];
-                     
+                    
                 //Insert Captured information to a database table
-                $postQuery="INSERT INTO charges (charge_name, charge_desc, charge_amount) VALUES(?,?,?)";
-                $frQry = "INSERT INTO operation_charges (operation_charge_charge_id, operation) VALUES(?,?)";
-                $upQr="UPDATE library_operations SET operation_charge =? WHERE operation_id =?";
+                $postQuery="INSERT INTO charges (charge_id, charge_name, charge_desc, charge_amount) VALUES(?,?,?,?)";
+                $frQry = "INSERT INTO operation_charges (operation_charge_charge_id, operation_charge_student_operation_id) VALUES(?,?)";
+                //$upQr="UPDATE library_operations SET operation_charge =? WHERE operation_id =?";
                 $postStmt = $mysqli->prepare($postQuery);
                 $frStmt = $mysqli->prepare($frQry);
-                $upStmt = $mysqli->prepare(($upQr));
+                //$upStmt = $mysqli->prepare(($upQr));
                 //bind paramaters
-                $rc=$postStmt->bind_param('sss', $charge_name, $charge_desc, $charge_amount);
-                $rc=$frStmt->bind_param('ss', $id, $operation );
-                $rc=$upStmt->bind_param('ss', $operation_charge, $id);
+                $rc=$postStmt->bind_param('ssss', $charge_id, $charge_name, $charge_desc, $charge_amount);
+                $rc=$frStmt->bind_param('ss', $charge_id, $id);
+                //$rc=$upStmt->bind_param('ss', $operation_charge, $id);
                 $postStmt->execute();
                 $frStmt->execute();
-                $upStmt->execute();
+                //$upStmt->execute();
 
                 //declare a varible which will be passed to alert function
-                if($postStmt && $frStmt && $upStmt)
+                if($postStmt && $frStmt )
                 {
                     $success = "Charge Added" && header("refresh:1; url=add_charges.php");
                 }
@@ -126,8 +123,7 @@
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4">Charge Name</label>
                                                 <input type="text" value="<?php echo $book->operation_type;?> Book Charge" name="charge_name" class="form-control">
-                                                <input type="hidden" value="<?php echo $book->operation_type;?> Book Charge" name="operation" class="form-control">
-                                                <input type="hidden" value="Charged"  name="operation_charge" class="form-control">                                                
+                                                <input type="hidden" value="<?php echo $charge_id;?>" name="charge_id" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputPassword4">Charge Amount</label>

@@ -16,5 +16,6 @@
     $beta = substr(str_shuffle("1234567890"),1,$length);
 
     $checksum= bin2hex(random_bytes('12'));
-    $operation_id = bin2hex(random_bytes('4'))
+    $operation_id = bin2hex(random_bytes('4'));
+    $charge_id = bin2hex(random_bytes('6'))
 ?>
