@@ -170,26 +170,26 @@
                                             </div>
                                         </div>
                                         <div class="form-row mb-4">
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-4">
                                                 <label for="inputCity">Address</label>
                                                 <input type="text" name="student_address" class="form-control" id="inputCity">
                                             </div>
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-4">
                                                 <label for="inputState">Profile Picture</label>
                                                 <input type="file" name="student_profile_picture" class="form-control btn btn-outline-success">                                                
                                             </div>
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-4">
                                                 <label for="inputZip">Gender</label>
                                                 <select name="student_gender" class="form-control" >
                                                     <option>Male</option>
                                                     <option>Female</option>
                                                 </select>
                                             </div>
-                                            <div class="form-group col-md-6">
+                                            <div style="display: none;" class="form-group col-md-6">
                                                 <label for="inputZip">Account Status</label>
                                                 <select name="student_account_status" class="form-control" >
                                                     <option>Can Login</option>
-                                                    <option>Denied Login</option>
+                                                    <option selected>Denied Login</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-6" style="display:none">

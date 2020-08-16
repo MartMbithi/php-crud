@@ -56,20 +56,20 @@
                 $librarian_address = $_POST['librarian_address'];
                 $librarian_profile_picture = $_FILES["librarian_profile_picture"]["name"];
                 move_uploaded_file($_FILES["librarian_profile_picture"]["tmp_name"],"assets/img/librarian/".$_FILES["librarian_profile_picture"]["name"]);
-                //$librarian_account_status = $_POST['librarian_account_status'];
+                $librarian_account_status = $_POST['librarian_account_status'];
                 $librarian_login_id = $_POST['librarian_login_id'];     
                 $librarian_bio = $_POST['librarian_bio'];          
 
                 //Insert Captured information to a database table
-                $postQuery="INSERT INTO librarians (librarian_bio, librarian_name, librarian_number, librarian_email, librarian_phone_number, librarian_address, librarian_profile_picture, librarian_login_id) VALUES (?,?,?,?,?,?,?,?)";
+                $postQuery="INSERT INTO librarians (librarian_account_status, librarian_bio, librarian_name, librarian_number, librarian_email, librarian_phone_number, librarian_address, librarian_profile_picture, librarian_login_id) VALUES (?,?,?,?,?,?,?,?,?)";
                 $postStmt = $mysqli->prepare($postQuery);
                 //bind paramaters
-                $rc=$postStmt->bind_param('ssssssss', $librarian_bio, $librarian_name, $librarian_number, $librarian_email, $librarian_phone_number, $librarian_address, $librarian_profile_picture, $librarian_login_id);
+                $rc=$postStmt->bind_param('sssssssss', $librarian_account_status, $librarian_bio, $librarian_name, $librarian_number, $librarian_email, $librarian_phone_number, $librarian_address, $librarian_profile_picture, $librarian_login_id);
                 $postStmt->execute();
                 //declare a varible which will be passed to alert function
                 if($postStmt)
                 {
-                    $success = "Librarian Added Added" && header("refresh:1; url=add_librarian.php");
+                    $success = "Librarian  Added" && header("refresh:1; url=add_librarian.php");
                 }
                 else 
                 {
@@ -171,15 +171,15 @@
                                                 <label for="inputState">Profile Picture</label>
                                                 <input type="file" name="librarian_profile_picture" class="form-control btn btn-outline-success">                                                
                                             </div>
-                                            <!--
-                                            <div class="form-group col-md-2">
+                                            
+                                            <div style="display: none;" class="form-group col-md-2" >
                                                 <label for="inputZip">Account Status</label>
                                                 <select name="librarian_account_status" class="form-control" >
                                                     <option>Can Login</option>
-                                                    <option>Denied Login</option>
+                                                    <option selected>Denied Login</option>
                                                 </select>
                                             </div>
-                                            -->
+        
                                             <div class="form-group col-md-6" style="display:none">
                                                 <label for="inputCity">Login Id</label>
                                                 <input type="text" name="librarian_login_id" class="form-control" value="<?php echo sha1(md5($beta));?>">
