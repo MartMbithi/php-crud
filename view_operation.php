@@ -16,6 +16,14 @@
         $res=$stmt->get_result();
         while($ops=$res->fetch_object())
         {
+
+            $book= $_GET['book'];
+            $ret="SELECT * FROM  books WHERE book_id = '$book'"; 
+            $stmt= $mysqli->prepare($ret);
+            $stmt->execute();
+            $res=$stmt->get_result();
+            while($book=$res->fetch_object())
+            {
             
     ?>
     <!--  END NAVBAR  -->
@@ -68,7 +76,7 @@
                         <div class="user-profile layout-spacing">
                             <div class="widget-content widget-content-area">
                                 <div class="d-flex justify-content-between">
-                                    <h3 class=""><?php echo $ops->book_title;?></h3>
+                                    <h3 class=""><?php echo $book->book_title;?></h3>
                                 </div>
                                 <div class="text-center user-info">
                                     <img src='assets/img/book_category.jpg' class='img-thumbnail img-fluid'  alt='avatar'>
@@ -80,11 +88,11 @@
                                         <ul class="contacts-block list-unstyled">
                                             <li class="contacts-block__item">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>                                                
-                                                Author : <?php echo $ops->book_author;?>
+                                                Author : <?php echo $book->book_author;?>
                                             </li>
                                             <li class="contacts-block__item">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>                                                 
-                                               ISBN No:  <?php echo $ops->book_isbn_no;?>
+                                               ISBN No:  <?php echo $book->book_isbn_no;?>
                                             </li>
                                             <li class="contacts-block__item">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path><polyline points="16 16 12 12 8 16"></polyline></svg>                                                 
@@ -118,7 +126,7 @@
         </div>
         <!--  END CONTENT AREA  -->
     </div>
-    <?php require_once('partials/_scripts.php'); }?>    
+    <?php require_once('partials/_scripts.php'); }}?>    
 </body>
 
 </html>
