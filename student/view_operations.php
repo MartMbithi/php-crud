@@ -60,9 +60,6 @@
                                             <th>Number</th>
                                             <th>Checksum</th>
                                             <th>Type</th>
-                                            <th>Book Isbn Number</th>
-                                            <th>Book Title</th>
-                                            <th>Book Author</th>
                                             <th>Created At</th>
                                             <th>Action</th>
                                         </tr>
@@ -102,9 +99,6 @@
                                                 <td><?php echo $ops->operation_number;?></td>
                                                 <td><?php echo $ops->operation_checksum;?></td>
                                                 <td><?php echo $ops->operation_type;?></td>
-                                                <td><?php echo $ops->book_isbn_no;?></td>
-                                                <td><?php echo $ops->book_title;?></td>
-                                                <td><?php echo $ops->book_author;?></td>
                                                 <td><?php echo date('d-M-Y', strtotime($ops->created_at));?></td>
                                                 <td>
                                                     <div class="btn-group">

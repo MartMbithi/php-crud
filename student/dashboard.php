@@ -121,7 +121,6 @@
     <!-- END MAIN CONTAINER -->
     <?php
         require_once('partials/_scripts.php');
-        require_once('partials/_libraryOperations.php');
     ?>
 </body>
 
