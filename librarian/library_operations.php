@@ -60,7 +60,6 @@
                                             <th>Number</th>
                                             <th>Checksum</th>
                                             <th>Type</th>
-                                            <th>Created At</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -83,7 +82,6 @@
                                                 </td>
                                                 <td><?php echo $ops->operation_checksum;?></td>
                                                 <td><?php echo $ops->operation_type;?></td>
-                                                <td><?php echo date('d-M-Y', strtotime($ops->created_at));?></td>
                                             </tr>
                                         <?php }?>
                                     </tbody>

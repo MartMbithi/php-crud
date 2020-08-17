@@ -3,23 +3,7 @@
     include('config/config.php');
     include('config/checklogin.php');
     check_login();
-    if(isset($_GET['delete']))
-    {
-          $id=intval($_GET['delete']);
-          $adn="DELETE FROM  library_operations  WHERE  operation_id = ?";
-          $stmt= $mysqli->prepare($adn);
-          $stmt->bind_param('i',$id);
-          $stmt->execute();
-          $stmt->close();	 
-         if($stmt)
-         {
-             $success = "Deleted" && header("refresh:1; url=manage_operations.php");
-         }
-         else
-         {
-             $err = "Try Again Later";
-         }
-    }
+    
     require_once('partials/_head.php');
 ?>
 <body>
@@ -76,53 +60,30 @@
                                             <th>Number</th>
                                             <th>Checksum</th>
                                             <th>Type</th>
-                                            <th>Book Isbn Number</th>
-                                            <th>Book Title</th>
-                                            <th>Book Author</th>
-                                            <th>Created At</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                             //logic use operation id to get book id
-                                             $ret="SELECT * FROM library_operations"; 
-                                             $stmt= $mysqli->prepare($ret) ;
-                                             $stmt->execute();
-                                             $res=$stmt->get_result();
-                                             while($operation=$res->fetch_object())
-                                             {
-                                                 $op_id = $operation->operation_id;
-                                                 $ret="SELECT student_operation_book_id, student_operation_start_date   FROM student_operations WHERE Student_operation_operation_id ='$op_id' "; 
-                                                 $stmt= $mysqli->prepare($ret) ;
-                                                 $stmt->execute();
-                                                 $res=$stmt->get_result();
-                                                 while($book=$res->fetch_object())
-                                                 {
-                                                     $date = $book->student_operation_start_date;
-                                                     $bookid = $book->student_operation_book_id;
-                                                     $ret="SELECT *  FROM books WHERE book_id ='$bookid' "; 
-                                                     $stmt= $mysqli->prepare($ret) ;
-                                                     $stmt->execute();
-                                                     $res=$stmt->get_result();
-                                                     while($book=$res->fetch_object())
-                                                     {
+                                            //Get all library operations
+                                            $ret="SELECT * FROM library_operations"; 
+                                            $stmt= $mysqli->prepare($ret) ;
+                                            $stmt->execute();
+                                            $res=$stmt->get_result();
+                                            while($ops=$res->fetch_object())
+                                            {
                                         ?>
                                             <tr>
                                                 <td>
                                                     <span class="badge outline-badge-success">
-                                                        <a href="view_operation.php?view=<?php echo $operation->operation_id;?>&book=<?php echo $book->book_id;?>">
-                                                            <?php echo $operation->operation_number;?>
+                                                        <a href="view_operation.php?view=<?php echo $ops->operation_id;?>">
+                                                            <?php echo $ops->operation_number;?>
                                                         </a>
                                                     </span>
                                                 </td>
-                                                <td><?php echo $operation->operation_checksum;?></td>
-                                                <td><?php echo $operation->operation_type;?></td>
-                                                <td><?php echo $book->book_isbn_no;?></td>
-                                                <td><?php echo $book->book_title;?></td>
-                                                <td><?php echo $book->book_author;?></td>
-                                                <td><?php echo date('d-M-Y', strtotime($operation->created_at));?></td>
+                                                <td><?php echo $ops->operation_checksum;?></td>
+                                                <td><?php echo $ops->operation_type;?></td>
                                             </tr>
-                                        <?php }}}?>
+                                        <?php }?>
                                     </tbody>
                                 </table>
                             </div>

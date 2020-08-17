@@ -76,7 +76,6 @@
                                             <th>Number</th>
                                             <th>Checksum</th>
                                             <th>Type</th>
-                                            <th>Created At</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -93,7 +92,6 @@
                                                 <td><?php echo $operation->operation_number;?></td>
                                                 <td><?php echo $operation->operation_checksum;?></td>
                                                 <td><?php echo $operation->operation_type;?></td>
-                                                <td><?php echo date('d-M-Y', strtotime($operation->created_at));?></td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-dark btn-sm">Manage</button>

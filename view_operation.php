@@ -87,7 +87,7 @@
                                     <h3 class=""><?php echo $book->book_title;?></h3>
                                 </div>
                                 <div class="text-center user-info">
-                                    <img src='../assets/img/book_category.jpg' class='img-thumbnail img-fluid'  alt='avatar'>
+                                    <img src='assets/img/book_category.jpg' class='img-thumbnail img-fluid'  alt='avatar'>
                                     <p class="">Operation Type : <?php echo $operation->operation_type;?> Book</p>
                                 </div>
                                 <div class="user-info-list">
