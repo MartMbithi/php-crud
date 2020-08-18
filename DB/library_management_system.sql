@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 18, 2020 at 09:56 AM
+-- Generation Time: Aug 18, 2020 at 01:47 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.26
 
@@ -396,6 +396,18 @@ ALTER TABLE `student_operations`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `books`
+--
+ALTER TABLE `books`
+  ADD CONSTRAINT `BooksBookCategory` FOREIGN KEY (`book_category_id`) REFERENCES `book_categories` (`category_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `operation_charges`
+--
+ALTER TABLE `operation_charges`
+  ADD CONSTRAINT `OperationRelation` FOREIGN KEY (`operation_charge_charge_id`) REFERENCES `charges` (`charge_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `student_operations`
