@@ -91,7 +91,7 @@
                                             <tr>
                                                 <td><?php echo $operation->operation_number;?></td>
                                                 <td><?php echo $operation->operation_checksum;?></td>
-                                                <td><?php echo $operation->operation_type;?></td>
+                                                <td><?php echo $operation->operation_type;?> Book </td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-dark btn-sm">Manage</button>

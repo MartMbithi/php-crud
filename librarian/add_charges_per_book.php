@@ -50,7 +50,8 @@
             
     
     require_once('partials/_head.php');
-    require_once('config/code-generator.php');
+    
+
 ?>
 <body>
     <!-- BEGIN LOADER -->
@@ -123,7 +124,7 @@
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4">Charge Name</label>
                                                 <input type="text" value="<?php echo $book->operation_type;?> Book Charge" name="charge_name" class="form-control">
-                                                <input type="hidden" value="<?php echo $charge_id;?>" name="charge_id" class="form-control">
+                                                <input type="hidden" value="<?php echo bin2hex(random_bytes('6'));?>" name="charge_id" class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="inputPassword4">Charge Amount</label>

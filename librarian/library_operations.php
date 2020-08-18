@@ -81,7 +81,7 @@
                                                     </span>
                                                 </td>
                                                 <td><?php echo $ops->operation_checksum;?></td>
-                                                <td><?php echo $ops->operation_type;?></td>
+                                                <td><?php echo $ops->operation_type;?> Book Operation</td>
                                             </tr>
                                         <?php }?>
                                     </tbody>
