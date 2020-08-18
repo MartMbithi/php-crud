@@ -31,6 +31,14 @@
                 $res=$stmt->get_result();
                 while($book=$res->fetch_object())
                 {
+                    if($book->book_coverimage == '')
+                    {
+                        $cover ="<img src='assets/img/book_category.jpg' class='img-thumbnail img-fluid'  alt='avatar'>";
+                    }
+                    else
+                    {
+                        $cover="<img src='assets/img/books/$book->book_coverimage' class='img-thumbnail img-fluid'  alt='avatar'>";
+                    }
 
             
     ?>
@@ -87,7 +95,7 @@
                                     <h3 class=""><?php echo $book->book_title;?></h3>
                                 </div>
                                 <div class="text-center user-info">
-                                    <img src='assets/img/book_category.jpg' class='img-thumbnail img-fluid'  alt='avatar'>
+                                    <?php echo $cover;?>
                                     <p class="">Operation Type : <?php echo $operation->operation_type;?> Book</p>
                                 </div>
                                 <div class="user-info-list">
