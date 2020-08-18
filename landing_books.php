@@ -87,7 +87,7 @@
                 <div class="row wow fadeInUp">
                     <div class="col-xs-12 col-sm-10 col-sm-offset-1 text-center">
                         <div class="jumbotron">
-                            <h1 class="text-white">Choose Your Book and Proceed To Borrowing It</h1>
+                            <h1 class="text-white">Available Books</h1>
                         </div>
                         <div class="title-bar white">
                             <ul class="list-inline list-unstyled">

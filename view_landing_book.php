@@ -77,7 +77,7 @@
                     <div class="navbar-right in fade" id="mainmenu">
                         <ul class="nav navbar-nav nav-white text-uppercase">
                             <li class="">
-                                <a href=home>Home</a>
+                                <a href="index.php">Home</a>
                             </li>
                             <li class="active">
                                 <a href="landing_books.php">Books</a>
@@ -105,7 +105,7 @@
                 <div class="row wow fadeInUp">
                     <div class="col-xs-12 col-sm-10 col-sm-offset-1 text-center">
                         <div class="jumbotron">
-                            <h1 class="text-white">Choose Your Book and Proceed To Borrowing It</h1>
+                            <h1 class="text-white"><?php echo $row->book_title;?></h1>
                         </div>
                         <div class="title-bar white">
                             <ul class="list-inline list-unstyled">
